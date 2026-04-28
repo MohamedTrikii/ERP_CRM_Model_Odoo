@@ -1,0 +1,26 @@
+<odoo>
+    <record id="crm_mt_lost_reason_form" model="ir.ui.view">
+        <field name="name">crm.mt.lost.reason.form</field>
+        <field name="model">crm.mt.lost.reason</field>
+        <field name="arch" type="xml">
+            <form string="Lost Reason">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="crm_mt_lost_reason_tree" model="ir.ui.view">
+        <field name="name">crm.mt.lost.reason.tree</field>
+        <field name="model">crm.mt.lost.reason</field>
+        <field name="arch" type="xml">
+            <tree string="Lost Reasons">
+                <field name="name"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

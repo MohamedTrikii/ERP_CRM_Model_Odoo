@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vue Tree (Liste) -->
+    <record id="view_sale_order_tree" model="ir.ui.view">
+        <field name="name">erp.sale.order.tree</field>
+        <field name="model">erp.sale.order</field>
+        <field name="arch" type="xml">
+            <tree string="Commandes de vente" 
+                  decoration-info="state == 'draft'"
+                  decoration-muted="state == 'cancel'"
+                  decoration-success="state == 'sale'"
+                  decoration-warning="state == 'sent'">
+                <field name="name" string="Référence"/>
+                <field name="date_order" string="Date"/>
+                <field name="partner_id" string="Client"/>
+                <field name="user_id" widget="many2one_avatar_user" string="Commercial"/>
+                <field name="amount_untaxed" string="Montant HT" sum="Total HT"/>
+                <field name="amount_total" string="Total TTC" sum="Total TTC"/>
+                <field name="state" string="Statut" 
+                       widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-warning="state == 'sent'"
+                       decoration-success="state in ('sale', 'delivered', 'invoiced')"/>
+                <field name="invoice_status" string="Facturation" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Vue Form -->
+    <record id="view_sale_order_form" model="ir.ui.view">
+        <field name="name">erp.sale.order.form</field>
+        <field name="model">erp.sale.order</field>
+        <field name="arch" type="xml">
+            <form string="Commande de vente">
+                <header>
+                    <button name="action_quotation_send" 
+                            string="Envoyer par email" 
+                            type="object"
+                            invisible="state != 'draft'"
+                            class="btn-primary"/>
+                    <button name="action_confirm" 
+                            string="Confirmer" 
+                            type="object"
+                            invisible="state not in ['draft', 'sent']"
+                            class="btn-primary"/>
+                    <button name="action_delivered" 
+                            string="Marquer livré" 
+                            type="object"
+                            invisible="state != 'sale'"
+                            class="btn-primary"/>
+                    <button name="action_create_invoice" 
+                            string="Créer une facture" 
+                            type="object"
+                            invisible="state not in ['sale', 'delivered']"
+                            class="btn-primary"/>
+                    <button name="action_cancel" 
+                            string="Annuler" 
+                            type="object"
+                            invisible="state in ['cancel', 'invoiced']"/>
+                    <button name="action_draft" 
+                            string="Remettre en brouillon" 
+                            type="object"
+                            invisible="state != 'cancel'"/>
+                    <field name="state" widget="statusbar" 
+                           statusbar_visible="draft,sent,sale,delivered,invoiced"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_invoices" 
+                                type="object" 
+                                class="oe_stat_button" 
+                                icon="fa-pencil-square-o"
+                                invisible="invoice_count == 0">
+                            <field name="invoice_count" widget="statinfo" string="Factures"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group name="main_info">
+                            <field name="partner_id" 
+                                   options="{'no_create': False, 'no_open': False}"
+                                   placeholder="Sélectionner un client..."/>
+                            <field name="date_order"/>
+                            <field name="validity_date"/>
+                            <field name="commitment_date"/>
+                        </group>
+                        <group name="sales_info">
+                            <field name="user_id" 
+                                   widget="many2one_avatar_user"
+                                   options="{'no_create': True}"/>
+                            <field name="team_id" options="{'no_create': True}"/>
+                            <field name="client_order_ref"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <group name="addresses">
+                        <group string="Adresses">
+                            <field name="partner_invoice_id" 
+                                   options="{'no_create': True}"
+                                   context="{'show_address': 1}"
+                                   placeholder="Adresse de facturation"/>
+                            <field name="partner_shipping_id" 
+                                   options="{'no_create': True}"
+                                   context="{'show_address': 1}"
+                                   placeholder="Adresse de livraison"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Lignes de commande" name="order_lines">
+                            <field name="order_line">
+                                <tree editable="bottom" decoration-info="qty_to_invoice > 0">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="product_id" 
+                                           options="{'no_create': True}"
+                                           required="1"/>
+                                    <field name="name" required="1"/>
+                                    <field name="product_uom_qty" string="Qté"/>
+                                    <field name="product_uom" 
+                                           options="{'no_create': True}"
+                                           groups="uom.group_uom"/>
+                                    <field name="price_unit"/>
+                                    <field name="discount" groups="product.group_discount_per_so_line"/>
+                                    <field name="tax_id" widget="many2many_tags" optional="show"/>
+                                    <field name="price_subtotal" widget="monetary"/>
+                                    <field name="price_total" widget="monetary" optional="hide"/>
+                                    <field name="invoice_status" optional="hide"/>
+                                </tree>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="amount_untaxed" widget="monetary"/>
+                                <field name="amount_tax" widget="monetary"/>
+                                <div class="oe_subtotal_footer_separator oe_inline">
+                                    <label for="amount_total"/>
+                                </div>
+                                <field name="amount_total" 
+                                       widget="monetary" 
+                                       class="oe_subtotal_footer_separator"/>
+                            </group>
+                            <div class="oe_clear"/>
+                        </page>
+                        <page string="Autres informations" name="other_info">
+                            <group>
+                                <group string="Informations de vente">
+                                    <field name="invoice_status"/>
+                                </group>
+                            </group>
+                            <group string="Conditions générales">
+                                <field name="note" nolabel="1" placeholder="Définir les conditions générales de vente..."/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vue Kanban -->
+    <record id="view_sale_order_kanban" model="ir.ui.view">
+        <field name="name">erp.sale.order.kanban</field>
+        <field name="model">erp.sale.order</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile" default_group_by="state">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="amount_total"/>
+                <field name="state"/>
+                <field name="user_id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="row mb4">
+                                <div class="col-6">
+                                    <strong><field name="name"/></strong>
+                                </div>
+                                <div class="col-6 text-end">
+                                    <field name="amount_total" widget="monetary"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <span class="badge rounded-pill">
+                                        <field name="partner_id"/>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row mt4">
+                                <div class="col-6">
+                                    <field name="user_id" widget="many2one_avatar_user"/>
+                                </div>
+                                <div class="col-6 text-end">
+                                    <field name="state" widget="label_selection" 
+                                           options="{'classes': {'draft': 'info', 'sent': 'warning', 'sale': 'success'}}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Vue Search -->
+    <record id="view_sale_order_search" model="ir.ui.view">
+        <field name="name">erp.sale.order.search</field>
+        <field name="model">erp.sale.order</field>
+        <field name="arch" type="xml">
+            <search string="Rechercher commandes">
+                <field name="name" string="Référence" filter_domain="[('name', 'ilike', self)]"/>
+                <field name="partner_id" string="Client"/>
+                <field name="user_id" string="Commercial"/>
+                <field name="team_id" string="Équipe"/>
+                <separator/>
+                <filter string="Mes commandes" name="my_orders" 
+                        domain="[('user_id', '=', uid)]"/>
+                <filter string="Mon équipe" name="my_team" 
+                        domain="[('team_id.member_ids', 'in', uid)]"/>
+                <separator/>
+                <filter string="Brouillon" name="draft" 
+                        domain="[('state', '=', 'draft')]"/>
+                <filter string="Devis envoyés" name="sent" 
+                        domain="[('state', '=', 'sent')]"/>
+                <filter string="Confirmées" name="sale" 
+                        domain="[('state', '=', 'sale')]"/>
+                <filter string="À facturer" name="to_invoice" 
+                        domain="[('invoice_status', '=', 'to_invoice')]"/>
+                <separator/>
+                <filter string="Date de commande" name="date_order" 
+                        date="date_order"/>
+                <group expand="0" string="Grouper par">
+                    <filter string="Client" name="customer" 
+                            context="{'group_by': 'partner_id'}"/>
+                    <filter string="Commercial" name="salesperson" 
+                            context="{'group_by': 'user_id'}"/>
+                    <filter string="Statut" name="status" 
+                            context="{'group_by': 'state'}"/>
+                    <filter string="Date de commande" name="order_month" 
+                            context="{'group_by': 'date_order:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Actions -->
+    <record id="action_sale_order" model="ir.actions.act_window">
+        <field name="name">Commandes de vente</field>
+        <field name="res_model">erp.sale.order</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="search_view_id" ref="view_sale_order_search"/>
+        <field name="context">{
+            'search_default_my_orders': 1,
+        }</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Créer votre première commande de vente
+            </p>
+            <p>
+                Gérez vos devis et commandes clients de manière professionnelle.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_quotations" model="ir.actions.act_window">
+        <field name="name">Devis</field>
+        <field name="res_model">erp.sale.order</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="search_view_id" ref="view_sale_order_search"/>
+        <field name="domain">[('state', 'in', ['draft', 'sent'])]</field>
+        <field name="context">{
+            'search_default_my_orders': 1,
+        }</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Créer un nouveau devis
+            </p>
+        </field>
+    </record>
+</odoo>

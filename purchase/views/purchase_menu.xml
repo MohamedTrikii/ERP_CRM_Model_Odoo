@@ -1,0 +1,9 @@
+<odoo>
+    <menuitem id="menu_purchase_root" name="Achats" sequence="10"/>
+    <menuitem id="menu_purchase_orders" name="Bons de commande" parent="menu_purchase_root" action="action_purchase_order"/>
+    <record id="action_purchase_order" model="ir.actions.act_window">
+        <field name="name">Bons de commande</field>
+        <field name="res_model">purchase.order</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

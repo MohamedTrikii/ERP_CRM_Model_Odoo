@@ -1,0 +1,21 @@
+<odoo>
+    <template id="crm_dashboard_template" name="CRM Dashboard">
+        <t t-call="website.layout">
+            <div class="container">
+                <h1>CRM Dashboard</h1>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Leads</h5>
+                                <p class="card-text">
+                                    <t t-esc="lead_count"/>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

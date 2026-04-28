@@ -1,0 +1,27 @@
+<odoo>
+    <record id="crm_mt_team_form" model="ir.ui.view">
+        <field name="name">crm.mt.team.form</field>
+        <field name="model">crm.mt.team</field>
+        <field name="arch" type="xml">
+            <form string="Team">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="user_id"/>
+                        <field name="member_ids"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="crm_mt_team_tree" model="ir.ui.view">
+        <field name="name">crm.mt.team.tree</field>
+        <field name="model">crm.mt.team</field>
+        <field name="arch" type="xml">
+            <tree string="Teams">
+                <field name="name"/>
+                <field name="user_id"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

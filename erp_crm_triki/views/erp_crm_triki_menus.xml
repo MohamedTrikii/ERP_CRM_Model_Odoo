@@ -1,0 +1,7 @@
+<odoo>
+    <menuitem id="menu_erp_crm_triki_root" name="ERP CRM Triki" sequence="1"/>
+    <menuitem id="menu_crm_lead" name="Leads" parent="menu_erp_crm_triki_root"/>
+    <menuitem id="menu_sale_order" name="Sales Orders" parent="menu_erp_crm_triki_root"/>
+    <menuitem id="menu_purchase_order" name="Purchase Orders" parent="menu_erp_crm_triki_root"/>
+    <menuitem id="menu_res_partner" name="Partners" parent="menu_erp_crm_triki_root"/>
+</odoo>

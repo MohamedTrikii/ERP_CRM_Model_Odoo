@@ -1,0 +1,9 @@
+<odoo>
+    <record id="sale_order_demo1" model="sale.order">
+        <field name="name">SO001</field>
+        <field name="partner_id" ref="base.res_partner_1"/>
+        <field name="date_order">2026-04-20 10:00:00</field>
+        <field name="state">draft</field>
+        <field name="amount_total">1000.0</field>
+    </record>
+</odoo>

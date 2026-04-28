@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+crm_mt_lead_user,crm.mt.lead,model_crm_mt_lead,base.group_user,1,1,1,1
+crm_mt_stage_user,crm.mt.stage,model_crm_mt_stage,base.group_user,1,1,1,1
+crm_mt_team_user,crm.mt.team,model_crm_mt_team,base.group_user,1,1,1,1
+crm_mt_lost_reason_user,crm.mt.lost.reason,model_crm_mt_lost_reason,base.group_user,1,1,1,1
+crm_mt_sale_user,crm.mt.sale,model_crm_mt_sale,base.group_user,1,1,1,1
+crm_mt_purchase_user,crm.mt.purchase,model_crm_mt_purchase,base.group_user,1,1,1,1

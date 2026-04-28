@@ -1,0 +1,51 @@
+<odoo>
+    <record id="crm_mt_sale_form" model="ir.ui.view">
+        <field name="name">crm.mt.sale.form</field>
+        <field name="model">crm.mt.sale</field>
+        <field name="arch" type="xml">
+            <form string="Sale Order">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="partner_id"/>
+                        <field name="user_id"/>
+                        <field name="team_id"/>
+                        <field name="date_order"/>
+                        <field name="state"/>
+                        <field name="priority"/>
+                        <field name="expected_revenue"/>
+                        <field name="probability"/>
+                        <field name="amount_untaxed"/>
+                        <field name="amount_tax"/>
+                        <field name="amount_total"/>
+                        <field name="currency_id"/>
+                        <field name="note"/>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="description"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="crm_mt_sale_tree" model="ir.ui.view">
+        <field name="name">crm.mt.sale.tree</field>
+        <field name="model">crm.mt.sale</field>
+        <field name="arch" type="xml">
+            <tree string="Sale Orders">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="user_id"/>
+                <field name="team_id"/>
+                <field name="date_order"/>
+                <field name="state"/>
+                <field name="priority"/>
+                <field name="expected_revenue"/>
+                <field name="probability"/>
+                <field name="amount_total"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

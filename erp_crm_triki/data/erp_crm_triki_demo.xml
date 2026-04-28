@@ -1,0 +1,8 @@
+<odoo>
+    <data noupdate="1">
+        <!-- Demo data example -->
+        <record id="demo_partner" model="res.partner">
+            <field name="name">Demo Partner</field>
+        </record>
+    </data>
+</odoo>

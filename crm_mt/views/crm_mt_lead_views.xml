@@ -1,0 +1,50 @@
+<odoo>
+    <record id="crm_mt_lead_form" model="ir.ui.view">
+        <field name="name">crm.mt.lead.form</field>
+        <field name="model">crm.mt.lead</field>
+        <field name="arch" type="xml">
+            <form string="Lead/Opportunity">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="partner_id"/>
+                        <field name="user_id"/>
+                        <field name="team_id"/>
+                        <field name="stage_id"/>
+                        <field name="expected_revenue"/>
+                        <field name="probability"/>
+                        <field name="priority"/>
+                        <field name="date_deadline"/>
+                        <field name="lost_reason_id"/>
+                        <field name="won_status"/>
+                        <field name="active"/>
+                        <field name="currency_id"/>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="description"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="crm_mt_lead_tree" model="ir.ui.view">
+        <field name="name">crm.mt.lead.tree</field>
+        <field name="model">crm.mt.lead</field>
+        <field name="arch" type="xml">
+            <tree string="Leads/Opportunities">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="user_id"/>
+                <field name="team_id"/>
+                <field name="stage_id"/>
+                <field name="expected_revenue"/>
+                <field name="probability"/>
+                <field name="priority"/>
+                <field name="date_deadline"/>
+                <field name="won_status"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

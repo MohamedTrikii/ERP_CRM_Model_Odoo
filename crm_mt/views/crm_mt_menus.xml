@@ -1,0 +1,41 @@
+<odoo>
+    <menuitem id="crm_mt_root_menu" name="CRM_MT" sequence="10"/>
+
+    <menuitem id="crm_mt_menu_lead" name="Leads/Opportunities" parent="crm_mt_root_menu" action="crm_mt_action_lead" sequence="10"/>
+    <menuitem id="crm_mt_menu_sale" name="Sales" parent="crm_mt_root_menu" action="crm_mt_action_sale" sequence="20"/>
+    <menuitem id="crm_mt_menu_purchase" name="Purchases" parent="crm_mt_root_menu" action="crm_mt_action_purchase" sequence="30"/>
+    <menuitem id="crm_mt_menu_team" name="Teams" parent="crm_mt_root_menu" action="crm_mt_action_team" sequence="40"/>
+    <menuitem id="crm_mt_menu_stage" name="Stages" parent="crm_mt_root_menu" action="crm_mt_action_stage" sequence="50"/>
+    <menuitem id="crm_mt_menu_lost_reason" name="Lost Reasons" parent="crm_mt_root_menu" action="crm_mt_action_lost_reason" sequence="60"/>
+
+    <record id="crm_mt_action_lead" model="ir.actions.act_window">
+        <field name="name">Leads/Opportunities</field>
+        <field name="res_model">crm.mt.lead</field>
+        <field name="view_mode">kanban,tree,form,graph,pivot,calendar</field>
+    </record>
+    <record id="crm_mt_action_sale" model="ir.actions.act_window">
+        <field name="name">Sales</field>
+        <field name="res_model">crm.mt.sale</field>
+        <field name="view_mode">kanban,tree,form,graph,pivot,calendar</field>
+    </record>
+    <record id="crm_mt_action_purchase" model="ir.actions.act_window">
+        <field name="name">Purchases</field>
+        <field name="res_model">crm.mt.purchase</field>
+        <field name="view_mode">kanban,tree,form,graph,pivot,calendar</field>
+    </record>
+    <record id="crm_mt_action_team" model="ir.actions.act_window">
+        <field name="name">Teams</field>
+        <field name="res_model">crm.mt.team</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="crm_mt_action_stage" model="ir.actions.act_window">
+        <field name="name">Stages</field>
+        <field name="res_model">crm.mt.stage</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="crm_mt_action_lost_reason" model="ir.actions.act_window">
+        <field name="name">Lost Reasons</field>
+        <field name="res_model">crm.mt.lost.reason</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

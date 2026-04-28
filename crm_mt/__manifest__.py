@@ -1,0 +1,26 @@
+# -*- coding: utf-8 -*-
+{
+    'name': 'CRM_MT',
+    'version': '1.0',
+    'category': 'Sales/CRM',
+    'summary': 'Gestion personnalisée des prospects, opportunités, ventes et achats',
+    'author': 'Open Source',
+    'website': '',
+    'license': 'LGPL-3',
+    'depends': ['base', 'mail', 'utm'],
+    'data': [
+        'security/ir.model.access.csv',
+        'views/crm_mt_lead_views.xml',
+        'views/crm_mt_stage_views.xml',
+        'views/crm_mt_team_views.xml',
+        'views/crm_mt_lost_reason_views.xml',
+        'views/crm_mt_sale_views.xml',
+        'views/crm_mt_purchase_views.xml',
+        'views/crm_mt_sale_line_views.xml',
+        'views/crm_mt_purchase_line_views.xml',
+        'views/crm_mt_menus.xml',
+    ],
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+}

@@ -1,0 +1,32 @@
+<odoo>
+    <record id="crm_mt_sale_line_form" model="ir.ui.view">
+        <field name="name">crm.mt.sale.line.form</field>
+        <field name="model">crm.mt.sale.line</field>
+        <field name="arch" type="xml">
+            <form string="Sale Order Line">
+                <sheet>
+                    <group>
+                        <field name="order_id"/>
+                        <field name="product_id"/>
+                        <field name="quantity"/>
+                        <field name="price_unit"/>
+                        <field name="price_subtotal"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="crm_mt_sale_line_tree" model="ir.ui.view">
+        <field name="name">crm.mt.sale.line.tree</field>
+        <field name="model">crm.mt.sale.line</field>
+        <field name="arch" type="xml">
+            <tree string="Sale Order Lines">
+                <field name="order_id"/>
+                <field name="product_id"/>
+                <field name="quantity"/>
+                <field name="price_unit"/>
+                <field name="price_subtotal"/>
+            </tree>
+        </field>
+    </record>
+</odoo>
