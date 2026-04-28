@@ -1,8 +1,0 @@
-<odoo>
-    <data noupdate="1">
-        <!-- Example group -->
-        <record id="group_erp_crm_triki_user" model="res.groups">
-            <field name="name">ERP CRM Triki User</field>
-        </record>
-    </data>
-</odoo>
