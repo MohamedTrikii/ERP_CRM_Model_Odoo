@@ -1,0 +1,8 @@
+<odoo>
+    <!-- ir.model for crm.mt.lead -->
+    <record id="model_crm_mt_lead" model="ir.model">
+        <field name="name">crm.mt.lead</field>
+        <field name="model">crm.mt.lead</field>
+        <field name="state">base</field>
+    </record>
+</odoo>

@@ -6,3 +6,4 @@ from . import crm_mt_sale
 from . import crm_mt_purchase
 from . import crm_mt_sale_line
 from . import crm_mt_purchase_line
+from . import crm_mt_product_stock

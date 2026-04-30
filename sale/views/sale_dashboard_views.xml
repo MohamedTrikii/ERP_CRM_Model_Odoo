@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ══════════════════════════════════════════════════════════════════════
+         Flowmerce ERP — Sales Dashboard (graph + pivot)
+         ══════════════════════════════════════════════════════════════════════ -->
+
+    <!-- ── Revenue by Month — Bar Chart ──────────────────────────────────── -->
+    <record id="view_sale_order_graph" model="ir.ui.view">
+        <field name="name">sale.order.graph</field>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <graph string="Sales Revenue" type="bar" stacked="True">
+                <field name="date_order" type="row" interval="month"/>
+                <field name="state" type="col"/>
+                <field name="amount_total" type="measure"/>
+                <field name="margin" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- ── Revenue by Customer — Pie ─────────────────────────────────────── -->
+    <record id="view_sale_order_graph_customer" model="ir.ui.view">
+        <field name="name">sale.order.graph.customer</field>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <graph string="Revenue by Customer" type="pie">
+                <field name="partner_id" type="row"/>
+                <field name="amount_total" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- ── Full Sales Pivot ───────────────────────────────────────────────── -->
+    <record id="view_sale_order_pivot" model="ir.ui.view">
+        <field name="name">sale.order.pivot</field>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <pivot string="Sales Analysis — Flowmerce ERP">
+                <field name="date_order" type="row" interval="month"/>
+                <field name="user_id" type="col"/>
+                <field name="amount_total" type="measure"/>
+                <field name="amount_untaxed" type="measure"/>
+                <field name="margin" type="measure"/>
+                <field name="margin_rate" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- ── Dashboard Action ──────────────────────────────────────────────── -->
+    <record id="action_sale_dashboard" model="ir.actions.act_window">
+        <field name="name">Sales Dashboard — Flowmerce</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">graph,pivot,list</field>
+        <field name="search_view_id" ref="view_sale_order_search"/>
+        <field name="domain">[('state','!=','cancel')]</field>
+        <field name="context">{'search_default_sale': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No sales data yet. Confirm your first order to populate the dashboard.
+            </p>
+        </field>
+    </record>
+
+</odoo>

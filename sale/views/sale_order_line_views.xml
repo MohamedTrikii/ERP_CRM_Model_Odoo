@@ -4,13 +4,13 @@
         <field name="name">sale.order.line.tree</field>
         <field name="model">sale.order.line</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="order_id"/>
                 <field name="product_id"/>
                 <field name="product_uom_qty"/>
                 <field name="price_unit"/>
                 <field name="price_subtotal"/>
-            </tree>
+            </list>
         </field>
     </record>
 </odoo>

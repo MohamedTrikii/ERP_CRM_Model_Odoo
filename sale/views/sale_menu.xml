@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Menu principal Ventes -->
+    <!-- Root Menu -->
     <menuitem id="menu_sale_root"
-              name="Ventes"
+              name="Flowmerce Sales"
               sequence="10"
               web_icon="erp_sales,static/description/icon.png"/>
+
+    <!-- Dashboard -->
+    <menuitem id="menu_sale_dashboard"
+              name="Dashboard"
+              parent="menu_sale_root"
+              action="sale.action_sale_dashboard"
+              sequence="5"/>
 
     <!-- Sous-menu Commandes -->
     <menuitem id="menu_sale_orders"

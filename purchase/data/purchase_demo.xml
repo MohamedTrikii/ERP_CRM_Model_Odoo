@@ -1,9 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- Demo purchase order (no computed fields set directly) -->
     <record id="purchase_order_demo1" model="purchase.order">
-        <field name="name">PO001</field>
         <field name="partner_id" ref="base.res_partner_2"/>
         <field name="date_order">2026-04-20 11:00:00</field>
         <field name="state">draft</field>
-        <field name="amount_total">500.0</field>
     </record>
 </odoo>

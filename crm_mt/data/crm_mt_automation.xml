@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ══════════════════════════════════════════════════════════════════════
+         CRM_TRIKI ERP — Automations & Cron Jobs (crm_mt)
+         ══════════════════════════════════════════════════════════════════════ -->
+
+    <!-- ── 1. Server Action: Auto Follow-Up Stale Quotations ──────────────── -->
+    <record id="action_auto_followup_quotations" model="ir.actions.server">
+        <field name="name">CRM_TRIKI: Auto Follow-Up Stale Quotations</field>
+        <field name="model_id" ref="crm_mt.model_crm_mt_lead"/>
+        <field name="state">code</field>
+        <field name="code">
+env['sale.order'].search([]).cron_auto_followup_quotations()
+        </field>
+    </record>
+
+    <!-- ── 2. Server Action: Recompute All Lead Scores ────────────────────── -->
+    <record id="action_recompute_lead_scores" model="ir.actions.server">
+        <field name="name">CRM_TRIKI: Recompute All Lead Scores</field>
+        <field name="model_id" ref="crm_mt.model_crm_mt_lead"/>
+        <field name="state">code</field>
+        <field name="code">
+leads = env['crm.mt.lead'].search([('active', '=', True)])
+leads.compute_score()
+        </field>
+    </record>
+
+    <!-- ── 3. Server Action: Detect High-Risk Leads ───────────────────────── -->
+    <record id="action_detect_risk_leads" model="ir.actions.server">
+        <field name="name">CRM_TRIKI: Detect High-Risk Leads</field>
+        <field name="model_id" ref="crm_mt.model_crm_mt_lead"/>
+        <field name="state">code</field>
+        <field name="code">
+leads = env['crm.mt.lead'].search([('active', '=', True), ('won_status', '=', 'pending')])
+leads.detect_risk()
+        </field>
+    </record>
+
+    <!-- ── 4. Server Action: Auto-Confirm Auto-Order Purchases ───────────── -->
+    <record id="action_auto_confirm_purchases" model="ir.actions.server">
+        <field name="name">CRM_TRIKI: Auto-Confirm Flagged Purchase Orders</field>
+        <field name="model_id" ref="crm_mt.model_crm_mt_lead"/>
+        <field name="state">code</field>
+        <field name="code">
+env['purchase.order'].auto_create_purchase_if_needed()
+        </field>
+    </record>
+
+    <!-- ── 5. Server Action: Check Low Stock &amp; Trigger Purchase ──────── -->
+    <record id="action_check_low_stock" model="ir.actions.server">
+        <field name="name">CRM_TRIKI: Check Low Stock</field>
+        <field name="model_id" ref="crm_mt.model_crm_mt_product_stock"/>
+        <field name="state">code</field>
+        <field name="code">
+env['crm.mt.product.stock'].cron_check_low_stock()
+        </field>
+    </record>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         CRON JOBS
+         ══════════════════════════════════════════════════════════════════════ -->
+
+    <!-- ── Cron 1: Check Inactive Leads (daily) ───────────────────────────── -->
+    <record id="cron_check_inactive_leads" model="ir.cron">
+        <field name="name">Flowmerce CRM: Check Inactive Leads</field>
+        <field name="model_id" ref="crm_mt.model_crm_mt_lead"/>
+        <field name="state">code</field>
+        <field name="code">model.cron_check_inactive_leads()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="active">True</field>
+        <field name="priority">10</field>
+    </record>
+
+    <!-- ── Cron 2: Recompute Lead Scores (daily) ─────────────────────────── -->
+    <record id="cron_recompute_lead_scores" model="ir.cron">
+        <field name="name">Flowmerce CRM: Recompute Lead Scores</field>
+        <field name="model_id" ref="crm_mt.model_crm_mt_lead"/>
+        <field name="state">code</field>
+        <field name="code">
+leads = env['crm.mt.lead'].search([('active', '=', True)])
+leads.compute_score()
+        </field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="active">True</field>
+        <field name="priority">20</field>
+    </record>
+
+    <!-- ── Cron 3: Check Low Stock &amp; Trigger Auto-PO (every 6 hours) ─── -->
+    <record id="cron_check_low_stock" model="ir.cron">
+        <field name="name">Flowmerce Stock: Check Low Stock</field>
+        <field name="model_id" ref="crm_mt.model_crm_mt_product_stock"/>
+        <field name="state">code</field>
+        <field name="code">model.cron_check_low_stock()</field>
+        <field name="interval_number">6</field>
+        <field name="interval_type">hours</field>
+        <field name="numbercall">-1</field>
+        <field name="active">True</field>
+        <field name="priority">10</field>
+    </record>
+
+    <!-- ── Cron 4: Stale Quotation Follow-Up (weekly) ────────────────────── -->
+    <record id="cron_followup_quotations" model="ir.cron">
+        <field name="name">Flowmerce Sale: Stale Quotation Follow-Up</field>
+        <field name="model_id" ref="crm_mt.model_crm_mt_lead"/>
+        <field name="state">code</field>
+        <field name="code">env['sale.order'].cron_auto_followup_quotations()</field>
+        <field name="interval_number">7</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="active">True</field>
+        <field name="priority">15</field>
+    </record>
+
+    <!-- ── Cron 5: Auto-Confirm Flagged Purchase Orders (daily) ─────────── -->
+    <record id="cron_auto_confirm_purchases" model="ir.cron">
+        <field name="name">Flowmerce Purchase: Auto-Confirm Flagged POs</field>
+        <field name="model_id" ref="crm_mt.model_crm_mt_lead"/>
+        <field name="state">code</field>
+        <field name="code">env['purchase.order'].auto_create_purchase_if_needed()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="active">True</field>
+        <field name="priority">15</field>
+    </record>
+
+</odoo>

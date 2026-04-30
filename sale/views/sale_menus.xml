@@ -1,9 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <menuitem id="menu_sale_root" name="Ventes" sequence="10"/>
-    <menuitem id="menu_sale_orders" name="Commandes" parent="menu_sale_root" action="action_sale_order"/>
-    <record id="action_sale_order" model="ir.actions.act_window">
-        <field name="name">Commandes</field>
-        <field name="res_model">sale.order</field>
-        <field name="view_mode">tree,form</field>
-    </record>
+    <!-- Root Menu -->
+    <menuitem id="menu_sale_root" name="Sales" sequence="10"/>
+
+    <!-- Orders submenu -->
+    <menuitem id="menu_sale_orders" name="Orders" parent="menu_sale_root" sequence="10"/>
+    <menuitem id="menu_sale_order_all" name="All Orders"
+              parent="menu_sale_orders" action="action_sale_order" sequence="1"/>
+    <menuitem id="menu_sale_quotations" name="Quotations"
+              parent="menu_sale_orders" action="action_quotations" sequence="2"/>
 </odoo>

@@ -1,9 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <menuitem id="menu_purchase_root" name="Achats" sequence="10"/>
-    <menuitem id="menu_purchase_orders" name="Bons de commande" parent="menu_purchase_root" action="action_purchase_order"/>
-    <record id="action_purchase_order" model="ir.actions.act_window">
-        <field name="name">Bons de commande</field>
-        <field name="res_model">purchase.order</field>
-        <field name="view_mode">tree,form</field>
-    </record>
+    <!-- Root Menu -->
+    <menuitem id="menu_purchase_root" name="Flowmerce Purchase" sequence="20"/>
+
+    <!-- Dashboard -->
+    <menuitem id="menu_purchase_dashboard"
+              name="Dashboard"
+              parent="menu_purchase_root"
+              action="purchase.action_purchase_dashboard"
+              sequence="5"/>
+
+    <!-- Orders submenu -->
+    <menuitem id="menu_purchase_orders_group" name="Orders"
+              parent="menu_purchase_root" sequence="10"/>
+    <menuitem id="menu_purchase_rfq" name="Requests for Quotation"
+              parent="menu_purchase_orders_group"
+              action="action_rfq" sequence="1"/>
+    <menuitem id="menu_purchase_all_orders" name="Purchase Orders"
+              parent="menu_purchase_orders_group"
+              action="action_purchase_order" sequence="2"/>
 </odoo>

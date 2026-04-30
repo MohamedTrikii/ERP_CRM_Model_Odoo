@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Sequence for CRM MT Sale Orders -->
+    <record id="sequence_crm_mt_sale" model="ir.sequence">
+        <field name="name">CRM MT Sale Order</field>
+        <field name="code">crm.mt.sale</field>
+        <field name="prefix">CMS</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <!-- Sequence for CRM MT Purchase Orders -->
+    <record id="sequence_crm_mt_purchase" model="ir.sequence">
+        <field name="name">CRM MT Purchase Order</field>
+        <field name="code">crm.mt.purchase</field>
+        <field name="prefix">CMP</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <!-- Default Stages -->
+    <record id="stage_new" model="crm.mt.stage">
+        <field name="name">New</field>
+        <field name="sequence">1</field>
+        <field name="fold" eval="False"/>
+        <field name="is_won" eval="False"/>
+        <field name="color">0</field>
+    </record>
+
+    <record id="stage_qualified" model="crm.mt.stage">
+        <field name="name">Qualified</field>
+        <field name="sequence">2</field>
+        <field name="fold" eval="False"/>
+        <field name="is_won" eval="False"/>
+        <field name="color">1</field>
+    </record>
+
+    <record id="stage_proposition" model="crm.mt.stage">
+        <field name="name">Proposition</field>
+        <field name="sequence">3</field>
+        <field name="fold" eval="False"/>
+        <field name="is_won" eval="False"/>
+        <field name="color">3</field>
+    </record>
+
+    <record id="stage_won" model="crm.mt.stage">
+        <field name="name">Won</field>
+        <field name="sequence">4</field>
+        <field name="fold" eval="False"/>
+        <field name="is_won" eval="True"/>
+        <field name="color">10</field>
+    </record>
+
+    <record id="stage_lost" model="crm.mt.stage">
+        <field name="name">Lost</field>
+        <field name="sequence">5</field>
+        <field name="fold" eval="True"/>
+        <field name="is_won" eval="False"/>
+        <field name="color">1</field>
+    </record>
+
+    <!-- Default Lost Reasons -->
+    <record id="lost_reason_too_expensive" model="crm.mt.lost.reason">
+        <field name="name">Too Expensive</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="lost_reason_lost_to_competitor" model="crm.mt.lost.reason">
+        <field name="name">Lost to Competitor</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="lost_reason_no_response" model="crm.mt.lost.reason">
+        <field name="name">No Response</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="lost_reason_not_interested" model="crm.mt.lost.reason">
+        <field name="name">Not Interested Anymore</field>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>

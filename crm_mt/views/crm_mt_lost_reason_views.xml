@@ -1,4 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- Kanban View -->
+    <record id="crm_mt_lost_reason_kanban" model="ir.ui.view">
+        <field name="name">crm.mt.lost.reason.kanban</field>
+        <field name="model">crm.mt.lost.reason</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_crm_lost_reason">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click oe_kanban_hover">
+                            <div class="o_kanban_header">
+                                <span class="o_kanban_record_title">
+                                    <field name="name"/>
+                                </span>
+                                <span t-if="!record.active.raw_value" class="badge badge-secondary">Inactive</span>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+                <field name="name"/>
+                <field name="active"/>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Form View -->
     <record id="crm_mt_lost_reason_form" model="ir.ui.view">
         <field name="name">crm.mt.lost.reason.form</field>
         <field name="model">crm.mt.lost.reason</field>
@@ -13,14 +39,54 @@
             </form>
         </field>
     </record>
+
+    <!-- List View -->
     <record id="crm_mt_lost_reason_tree" model="ir.ui.view">
         <field name="name">crm.mt.lost.reason.tree</field>
         <field name="model">crm.mt.lost.reason</field>
         <field name="arch" type="xml">
-            <tree string="Lost Reasons">
+            <list string="Lost Reasons">
                 <field name="name"/>
                 <field name="active"/>
-            </tree>
+            </list>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="crm_mt_lost_reason_search" model="ir.ui.view">
+        <field name="name">crm.mt.lost.reason.search</field>
+        <field name="model">crm.mt.lost.reason</field>
+        <field name="arch" type="xml">
+            <search string="Search Lost Reasons">
+                <field name="name" string="Reason Name"/>
+                <field name="active" string="Active"/>
+                <filter string="Inactive" name="inactive" domain="[('active','=',False)]"/>
+                <filter string="Group by Active" name="group_active" context="{'group_by': 'active'}"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Graph View -->
+    <record id="crm_mt_lost_reason_graph" model="ir.ui.view">
+        <field name="name">crm.mt.lost.reason.graph</field>
+        <field name="model">crm.mt.lost.reason</field>
+        <field name="arch" type="xml">
+            <graph string="Lost Reasons by Active" type="bar">
+                <field name="name" type="measure"/>
+                <field name="active" type="row"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Pivot View -->
+    <record id="crm_mt_lost_reason_pivot" model="ir.ui.view">
+        <field name="name">crm.mt.lost.reason.pivot</field>
+        <field name="model">crm.mt.lost.reason</field>
+        <field name="arch" type="xml">
+            <pivot string="Lost Reason Analysis">
+                <field name="name" type="measure"/>
+                <field name="active" type="row"/>
+            </pivot>
         </field>
     </record>
 </odoo>

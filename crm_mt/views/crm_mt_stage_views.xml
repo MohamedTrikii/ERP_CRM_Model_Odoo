@@ -1,4 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- Kanban View -->
+    <record id="crm_mt_stage_kanban" model="ir.ui.view">
+        <field name="name">crm.mt.stage.kanban</field>
+        <field name="model">crm.mt.stage</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_crm_stage">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click oe_kanban_hover">
+                            <div class="o_kanban_header">
+                                <span class="o_kanban_record_title">
+                                    <field name="name"/>
+                                </span>
+                                <span t-if="record.is_won.raw_value" class="badge badge-success">Won</span>
+                                <span t-if="record.fold.raw_value" class="badge badge-secondary">Folded</span>
+                            </div>
+                            <div class="o_kanban_details">
+                                <div class="o_kanban_sequence">
+                                    <field name="sequence"/>
+                                </div>
+                                <div class="o_kanban_color">
+                                    <field name="color" widget="color_picker"/>
+                                </div>
+                                <div class="o_kanban_teams">
+                                    <field name="team_ids" widget="many2many_tags"/>
+                                </div>
+                            </div>
+                            <div class="o_kanban_footer">
+                                <field name="requirements"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+                <field name="name"/>
+                <field name="is_won"/>
+                <field name="fold"/>
+                <field name="color"/>
+                <field name="team_ids"/>
+                <field name="sequence"/>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Form View -->
     <record id="crm_mt_stage_form" model="ir.ui.view">
         <field name="name">crm.mt.stage.form</field>
         <field name="model">crm.mt.stage</field>
@@ -10,25 +55,67 @@
                         <field name="sequence"/>
                         <field name="is_won"/>
                         <field name="fold"/>
-                        <field name="color"/>
-                        <field name="team_ids"/>
+                        <field name="color" widget="color_picker"/>
+                        <field name="team_ids" widget="many2many_tags"/>
                         <field name="requirements"/>
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
+
+    <!-- List View -->
     <record id="crm_mt_stage_tree" model="ir.ui.view">
         <field name="name">crm.mt.stage.tree</field>
         <field name="model">crm.mt.stage</field>
         <field name="arch" type="xml">
-            <tree string="Stages">
+            <list string="Stages">
                 <field name="sequence"/>
                 <field name="name"/>
                 <field name="is_won"/>
                 <field name="fold"/>
-                <field name="color"/>
-            </tree>
+                <field name="color" widget="color_picker"/>
+                <field name="team_ids" widget="many2many_tags"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="crm_mt_stage_search" model="ir.ui.view">
+        <field name="name">crm.mt.stage.search</field>
+        <field name="model">crm.mt.stage</field>
+        <field name="arch" type="xml">
+            <search string="Search Stages">
+                <field name="name" string="Stage Name"/>
+                <field name="is_won" string="Is Won"/>
+                <field name="fold" string="Folded"/>
+                <filter string="Group by Is Won" name="group_is_won" context="{'group_by': 'is_won'}"/>
+                <filter string="Group by Folded" name="group_folded" context="{'group_by': 'fold'}"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Graph View -->
+    <record id="crm_mt_stage_graph" model="ir.ui.view">
+        <field name="name">crm.mt.stage.graph</field>
+        <field name="model">crm.mt.stage</field>
+        <field name="arch" type="xml">
+            <graph string="Stages by Won" type="bar">
+                <field name="sequence" type="measure"/>
+                <field name="is_won" type="row"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Pivot View -->
+    <record id="crm_mt_stage_pivot" model="ir.ui.view">
+        <field name="name">crm.mt.stage.pivot</field>
+        <field name="model">crm.mt.stage</field>
+        <field name="arch" type="xml">
+            <pivot string="Stage Analysis">
+                <field name="sequence" type="measure"/>
+                <field name="is_won" type="row"/>
+            </pivot>
         </field>
     </record>
 </odoo>

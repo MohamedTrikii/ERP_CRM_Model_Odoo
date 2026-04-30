@@ -1,30 +1,31 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'ERP Sales Management',
-    'version': '19.0.1.0.0',
+    'name': 'Flowmerce ERP — Sales Management',
+    'version': '19.0.2.0.0',
     'category': 'Sales/Sales',
-    'summary': 'Module complet de gestion des ventes avec devis, commandes et facturation',
+    'summary': 'Sales orders, margin tracking, payment status and automated follow-up',
     'description': """
-        Module de Gestion des Ventes
-        ============================
-        * Gestion des devis et commandes clients
-        * Conversion automatique devis → commande
-        * Génération de factures
-        * Suivi des statuts (brouillon, confirmé, livré, facturé)
-        * Dashboard analytique des ventes
-        * Rapports et statistiques
+        Flowmerce ERP — Sales Management
+        =================================
+        * Quotation and sale order management
+        * Margin & margin rate per line and order
+        * Global discount on orders
+        * Payment status tracking (Unpaid / Partial / Paid)
+        * Auto-confirm and auto-invoice actions
+        * Cron: stale quotation follow-up
+        * Dashboard: revenue, margin by month/salesperson
     """,
-    'author': 'Votre Entreprise',
-    'website': 'https://www.votreentreprise.com',
+    'author': 'Flowmerce ERP — Open Source',
+    'website': '',
     'license': 'LGPL-3',
-    'depends': ['base', 'mail', 'product'],
+    'depends': ['base', 'mail', 'product', 'uom', 'crm_mt'],
     'data': [
         'security/sales_security.xml',
         'security/ir.model.access.csv',
         'data/sales_data.xml',
-        'data/sales_demo.xml',
         'views/sale_order_views.xml',
         'views/sale_order_line_views.xml',
+        'views/sale_dashboard_views.xml',
         'views/res_partner_views.xml',
         'views/sale_menus.xml',
         'report/sale_report_templates.xml',

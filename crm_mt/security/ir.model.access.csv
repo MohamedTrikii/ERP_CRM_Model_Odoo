@@ -1,7 +1,19 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-crm_mt_lead_user,crm.mt.lead,model_crm_mt_lead,base.group_user,1,1,1,1
-crm_mt_stage_user,crm.mt.stage,model_crm_mt_stage,base.group_user,1,1,1,1
-crm_mt_team_user,crm.mt.team,model_crm_mt_team,base.group_user,1,1,1,1
-crm_mt_lost_reason_user,crm.mt.lost.reason,model_crm_mt_lost_reason,base.group_user,1,1,1,1
-crm_mt_sale_user,crm.mt.sale,model_crm_mt_sale,base.group_user,1,1,1,1
-crm_mt_purchase_user,crm.mt.purchase,model_crm_mt_purchase,base.group_user,1,1,1,1
+crm_mt_lead_user,crm.mt.lead user,model_crm_mt_lead,crm_mt.group_flowmerce_user,1,1,1,0
+crm_mt_stage_user,crm.mt.stage user,model_crm_mt_stage,crm_mt.group_flowmerce_user,1,1,1,0
+crm_mt_team_user,crm.mt.team user,model_crm_mt_team,crm_mt.group_flowmerce_user,1,1,1,0
+crm_mt_lost_reason_user,crm.mt.lost.reason user,model_crm_mt_lost_reason,crm_mt.group_flowmerce_user,1,0,0,0
+crm_mt_sale_user,crm.mt.sale user,model_crm_mt_sale,crm_mt.group_flowmerce_sales,1,1,1,0
+crm_mt_sale_line_user,crm.mt.sale.line user,model_crm_mt_sale_line,crm_mt.group_flowmerce_sales,1,1,1,0
+crm_mt_purchase_user,crm.mt.purchase user,model_crm_mt_purchase,crm_mt.group_flowmerce_purchase,1,1,1,0
+crm_mt_purchase_line_user,crm.mt.purchase.line user,model_crm_mt_purchase_line,crm_mt.group_flowmerce_purchase,1,1,1,0
+crm_mt_stock_user,crm.mt.product.stock user,model_crm_mt_product_stock,crm_mt.group_flowmerce_user,1,0,0,0
+crm_mt_stock_manager,crm.mt.product.stock manager,model_crm_mt_product_stock,crm_mt.group_flowmerce_manager,1,1,1,1
+crm_mt_lead_manager,crm.mt.lead manager,model_crm_mt_lead,crm_mt.group_flowmerce_manager,1,1,1,1
+crm_mt_stage_manager,crm.mt.stage manager,model_crm_mt_stage,crm_mt.group_flowmerce_manager,1,1,1,1
+crm_mt_team_manager,crm.mt.team manager,model_crm_mt_team,crm_mt.group_flowmerce_manager,1,1,1,1
+crm_mt_lost_reason_manager,crm.mt.lost.reason manager,model_crm_mt_lost_reason,crm_mt.group_flowmerce_manager,1,1,1,1
+crm_mt_sale_manager,crm.mt.sale manager,model_crm_mt_sale,crm_mt.group_flowmerce_manager,1,1,1,1
+crm_mt_sale_line_manager,crm.mt.sale.line manager,model_crm_mt_sale_line,crm_mt.group_flowmerce_manager,1,1,1,1
+crm_mt_purchase_manager,crm.mt.purchase manager,model_crm_mt_purchase,crm_mt.group_flowmerce_manager,1,1,1,1
+crm_mt_purchase_line_manager,crm.mt.purchase.line manager,model_crm_mt_purchase_line,crm_mt.group_flowmerce_manager,1,1,1,1

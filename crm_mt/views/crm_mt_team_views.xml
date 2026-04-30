@@ -1,4 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- Kanban View -->
+    <record id="crm_mt_team_kanban" model="ir.ui.view">
+        <field name="name">crm.mt.team.kanban</field>
+        <field name="model">crm.mt.team</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_crm_team">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click oe_kanban_hover">
+                            <div class="o_kanban_header">
+                                <span class="o_kanban_record_title">
+                                    <field name="name"/>
+                                </span>
+                            </div>
+                            <div class="o_kanban_details">
+                                <div class="o_kanban_user">
+                                    <field name="user_id"/>
+                                </div>
+                                <div class="o_kanban_members">
+                                    <field name="member_ids" widget="many2many_tags"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="member_ids"/>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Form View -->
     <record id="crm_mt_team_form" model="ir.ui.view">
         <field name="name">crm.mt.team.form</field>
         <field name="model">crm.mt.team</field>
@@ -8,20 +42,61 @@
                     <group>
                         <field name="name"/>
                         <field name="user_id"/>
-                        <field name="member_ids"/>
+                        <field name="member_ids" widget="many2many_tags"/>
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
+
+    <!-- List View -->
     <record id="crm_mt_team_tree" model="ir.ui.view">
         <field name="name">crm.mt.team.tree</field>
         <field name="model">crm.mt.team</field>
         <field name="arch" type="xml">
-            <tree string="Teams">
+            <list string="Teams">
                 <field name="name"/>
                 <field name="user_id"/>
-            </tree>
+                <field name="member_ids" widget="many2many_tags"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="crm_mt_team_search" model="ir.ui.view">
+        <field name="name">crm.mt.team.search</field>
+        <field name="model">crm.mt.team</field>
+        <field name="arch" type="xml">
+            <search string="Search Teams">
+                <field name="name" string="Team Name"/>
+                <field name="user_id" string="Leader"/>
+                <filter string="My Teams" name="my_teams" domain="[('user_id','=',uid)]"/>
+                <filter string="Group by Leader" name="group_leader" context="{'group_by': 'user_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Graph View -->
+    <record id="crm_mt_team_graph" model="ir.ui.view">
+        <field name="name">crm.mt.team.graph</field>
+        <field name="model">crm.mt.team</field>
+        <field name="arch" type="xml">
+            <graph string="Teams by Leader" type="bar">
+                <field name="name" type="measure"/>
+                <field name="user_id" type="row"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Pivot View -->
+    <record id="crm_mt_team_pivot" model="ir.ui.view">
+        <field name="name">crm.mt.team.pivot</field>
+        <field name="model">crm.mt.team</field>
+        <field name="arch" type="xml">
+            <pivot string="Team Analysis">
+                <field name="name" type="measure"/>
+                <field name="user_id" type="row"/>
+            </pivot>
         </field>
     </record>
 </odoo>

@@ -1,2 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_purchase_order_user,purchase.order user,model_purchase_order,base.group_user,1,1,1,1
+access_purchase_order_user,purchase.order user,model_purchase_order,crm_mt.group_flowmerce_purchase,1,1,1,0
+access_purchase_order_manager,purchase.order manager,model_purchase_order,crm_mt.group_flowmerce_manager,1,1,1,1
+access_purchase_order_line_user,purchase.order.line user,model_purchase_order_line,crm_mt.group_flowmerce_purchase,1,1,1,0
+access_purchase_order_line_manager,purchase.order.line manager,model_purchase_order_line,crm_mt.group_flowmerce_manager,1,1,1,1

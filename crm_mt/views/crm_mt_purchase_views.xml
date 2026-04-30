@@ -1,51 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- Kanban View -->
+    <record id="crm_mt_purchase_kanban" model="ir.ui.view">
+        <field name="name">crm.mt.purchase.kanban</field>
+        <field name="model">crm.mt.purchase</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" class="o_kanban_crm_purchase">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click o_kanban_#{record.priority.raw_value} o_kanban_state_#{record.state.raw_value} oe_kanban_hover">
+                            <div class="o_kanban_header">
+                                <span class="o_kanban_record_title">
+                                    <field name="name"/>
+                                </span>
+                                <span t-if="record.priority.raw_value == '2'" class="badge badge-danger">Urgent</span>
+                                <span t-if="record.priority.raw_value == '1'" class="badge badge-warning">High</span>
+                            </div>
+                            <div class="o_kanban_details">
+                                <div class="o_kanban_partner">
+                                    <field name="partner_id"/>
+                                </div>
+                                <div class="o_kanban_amount">
+                                    <field name="expected_amount" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                </div>
+                                <div class="o_kanban_probability">
+                                    <span t-esc="record.probability.value"/>%
+                                </div>
+                                <div class="o_kanban_user">
+                                    <field name="user_id"/>
+                                </div>
+                            </div>
+                            <div class="o_kanban_footer">
+                                <field name="state"/>
+                                <div class="o_kanban_badges">
+                                    <span t-if="record.state.raw_value == 'purchase'" class="badge badge-success">Confirmed</span>
+                                    <span t-if="record.state.raw_value == 'cancel'" class="badge badge-secondary">Cancelled</span>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+                <field name="color"/>
+                <field name="priority"/>
+                <field name="state"/>
+                <field name="user_id"/>
+                <field name="expected_amount"/>
+                <field name="probability"/>
+                <field name="partner_id"/>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Form View -->
     <record id="crm_mt_purchase_form" model="ir.ui.view">
         <field name="name">crm.mt.purchase.form</field>
         <field name="model">crm.mt.purchase</field>
         <field name="arch" type="xml">
             <form string="Purchase Order">
+                <header>
+                    <button name="action_confirm" string="Confirm" type="object" class="btn-success" invisible="state == 'purchase'"/>
+                    <button name="action_received" string="Mark Received" type="object" class="btn-info" invisible="state != 'purchase'"/>
+                    <button name="action_cancel" string="Cancel" type="object" class="btn-secondary" invisible="state == 'cancel'"/>
+                    <button name="action_draft" string="Reset to Draft" type="object" class="btn-info" invisible="state != 'cancel'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,sent,purchase,received,invoiced"/>
+                </header>
                 <sheet>
                     <group>
-                        <field name="name"/>
-                        <field name="partner_id"/>
-                        <field name="user_id"/>
-                        <field name="team_id"/>
-                        <field name="date_order"/>
-                        <field name="state"/>
-                        <field name="priority"/>
-                        <field name="expected_amount"/>
-                        <field name="probability"/>
-                        <field name="amount_untaxed"/>
-                        <field name="amount_tax"/>
-                        <field name="amount_total"/>
-                        <field name="currency_id"/>
-                        <field name="note"/>
+                        <group string="Supplier Info" col="2">
+                            <field name="partner_id"/>
+                            <field name="user_id"/>
+                            <field name="team_id"/>
+                        </group>
+                        <group string="Order Details" col="2">
+                            <field name="name"/>
+                            <field name="state"/>
+                            <field name="priority" widget="priority"/>
+                            <field name="date_order"/>
+                        </group>
+                        <group string="Purchase Data" col="2">
+                            <field name="expected_amount"/>
+                            <field name="probability"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                        </group>
                     </group>
                     <notebook>
-                        <page string="Description">
+                        <page string="Order Lines" name="order_lines">
+                            <field name="order_line_ids" readonly="state not in ('draft', 'sent')">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="product_id"/>
+                                    <field name="name"/>
+                                    <field name="product_uom_qty"/>
+                                    <field name="product_uom"/>
+                                    <field name="price_unit"/>
+                                    <field name="price_subtotal" sum="Total"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="note" placeholder="Terms and conditions..."/>
                             <field name="description"/>
                         </page>
                     </notebook>
+                    <group class="oe_subtotal_footer oe_right" colspan="2">
+                        <field name="amount_untaxed"/>
+                        <field name="amount_tax"/>
+                        <div class="oe_subtotal_footer_separator oe_inline">
+                            <label for="amount_total"/>
+                        </div>
+                        <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator"/>
+                    </group>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
             </form>
         </field>
     </record>
+
+    <!-- List View -->
     <record id="crm_mt_purchase_tree" model="ir.ui.view">
         <field name="name">crm.mt.purchase.tree</field>
         <field name="model">crm.mt.purchase</field>
         <field name="arch" type="xml">
-            <tree string="Purchase Orders">
+            <list string="Purchase Orders">
                 <field name="name"/>
                 <field name="partner_id"/>
-                <field name="user_id"/>
-                <field name="team_id"/>
+                <field name="user_id" optional="show"/>
+                <field name="team_id" optional="show"/>
                 <field name="date_order"/>
-                <field name="state"/>
-                <field name="priority"/>
-                <field name="expected_amount"/>
-                <field name="probability"/>
-                <field name="amount_total"/>
-            </tree>
+                <field name="priority" widget="priority" optional="show"/>
+                <field name="expected_amount" optional="show"/>
+                <field name="probability" optional="show"/>
+                <field name="amount_total" string="Total"/>
+                <field name="state" widget="badge"
+                       decoration-success="state in ('purchase','received','invoiced')"
+                       decoration-warning="state=='sent'"
+                       decoration-danger="state=='cancel'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="crm_mt_purchase_search" model="ir.ui.view">
+        <field name="name">crm.mt.purchase.search</field>
+        <field name="model">crm.mt.purchase</field>
+        <field name="arch" type="xml">
+            <search string="Search Purchase Orders">
+                <field name="name" string="Order Name"/>
+                <field name="partner_id" string="Supplier"/>
+                <field name="state" string="Status"/>
+                <field name="user_id" string="Responsible"/>
+                <field name="date_order" string="Order Date"/>
+                <filter string="My Purchases" name="my_purchases" domain="[('user_id','=',uid)]"/>
+                <filter string="Confirmed" name="confirmed" domain="[('state','=','purchase')]"/>
+                <filter string="Cancelled" name="cancelled" domain="[('state','=','cancel')]"/>
+                <filter string="High Amount" name="high_amount" domain="[('expected_amount','>',10000)]"/>
+                <group>
+                    <filter string="Status" name="group_status" context="{'group_by': 'state'}"/>
+                    <filter string="Responsible" name="group_responsible" context="{'group_by': 'user_id'}"/>
+                    <filter string="Order Date" name="group_date" context="{'group_by': 'date_order'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Graph View -->
+    <record id="crm_mt_purchase_graph" model="ir.ui.view">
+        <field name="name">crm.mt.purchase.graph</field>
+        <field name="model">crm.mt.purchase</field>
+        <field name="arch" type="xml">
+            <graph string="Purchase Amount by Status" type="bar">
+                <field name="expected_amount" type="measure"/>
+                <field name="state" type="row"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Pivot View -->
+    <record id="crm_mt_purchase_pivot" model="ir.ui.view">
+        <field name="name">crm.mt.purchase.pivot</field>
+        <field name="model">crm.mt.purchase</field>
+        <field name="arch" type="xml">
+            <pivot string="Purchase Analysis">
+                <field name="expected_amount" type="measure"/>
+                <field name="probability" type="measure"/>
+                <field name="state" type="row"/>
+                <field name="user_id" type="col"/>
+            </pivot>
         </field>
     </record>
 </odoo>

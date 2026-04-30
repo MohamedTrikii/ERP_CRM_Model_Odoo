@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ══════════════════════════════════════════════════════════════════════
+         Flowmerce ERP — CRM Dashboard (graph + pivot + activity view)
+         ══════════════════════════════════════════════════════════════════════ -->
+
+    <!-- ── Revenue Pipeline — Bar Chart ──────────────────────────────────── -->
+    <record id="crm_mt_lead_graph_revenue_by_stage" model="ir.ui.view">
+        <field name="name">crm.mt.lead.graph.revenue.stage</field>
+        <field name="model">crm.mt.lead</field>
+        <field name="priority">20</field>
+        <field name="arch" type="xml">
+            <graph string="Revenue by Stage" type="bar" stacked="True">
+                <field name="stage_id" type="row"/>
+                <field name="segment_client" type="col"/>
+                <field name="expected_revenue" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- ── Lead Score Distribution — Pie Chart ───────────────────────────── -->
+    <record id="crm_mt_lead_graph_by_segment" model="ir.ui.view">
+        <field name="name">crm.mt.lead.graph.segment</field>
+        <field name="model">crm.mt.lead</field>
+        <field name="arch" type="xml">
+            <graph string="Leads by Segment" type="pie">
+                <field name="segment_client" type="row"/>
+                <field name="lead_score" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- ── Conversion Pipeline — Line Chart ───────────────────────────────── -->
+    <record id="crm_mt_lead_graph_conversion" model="ir.ui.view">
+        <field name="name">crm.mt.lead.graph.conversion</field>
+        <field name="model">crm.mt.lead</field>
+        <field name="arch" type="xml">
+            <graph string="Win Probability Trend" type="line">
+                <field name="stage_id" type="row"/>
+                <field name="probability" type="measure"/>
+                <field name="expected_revenue" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- ── Pivot: Full Lead Analysis ─────────────────────────────────────── -->
+    <record id="crm_mt_lead_pivot_full" model="ir.ui.view">
+        <field name="name">crm.mt.lead.pivot.full</field>
+        <field name="model">crm.mt.lead</field>
+        <field name="priority">20</field>
+        <field name="arch" type="xml">
+            <pivot string="CRM Analysis — Flowmerce ERP">
+                <field name="stage_id" type="row"/>
+                <field name="segment_client" type="row"/>
+                <field name="user_id" type="col"/>
+                <field name="expected_revenue" type="measure"/>
+                <field name="lead_score" type="measure"/>
+                <field name="probability" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- ── Dashboard Action: CRM Overview ────────────────────────────────── -->
+    <record id="action_crm_dashboard" model="ir.actions.act_window">
+        <field name="name">CRM Dashboard — Flowmerce</field>
+        <field name="res_model">crm.mt.lead</field>
+        <field name="view_mode">graph,pivot,list</field>
+        <field name="search_view_id" ref="crm_mt_lead_search"/>
+        <field name="domain">[('active','=',True)]</field>
+        <field name="context">{'search_default_pending': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No data yet. Create your first lead to start the pipeline!
+            </p>
+        </field>
+    </record>
+
+    <!-- ── Stock Dashboard: Graph ────────────────────────────────────────── -->
+    <record id="crm_mt_stock_graph" model="ir.ui.view">
+        <field name="name">crm.mt.product.stock.graph</field>
+        <field name="model">crm.mt.product.stock</field>
+        <field name="arch" type="xml">
+            <graph string="Stock Levels" type="bar">
+                <field name="category_id" type="row"/>
+                <field name="qty_available" type="measure"/>
+                <field name="qty_reserved" type="measure"/>
+                <field name="qty_ordered" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- ── Stock Dashboard: Pivot ────────────────────────────────────────── -->
+    <record id="crm_mt_stock_pivot" model="ir.ui.view">
+        <field name="name">crm.mt.product.stock.pivot</field>
+        <field name="model">crm.mt.product.stock</field>
+        <field name="arch" type="xml">
+            <pivot string="Stock Analysis">
+                <field name="category_id" type="row"/>
+                <field name="stock_status" type="col"/>
+                <field name="qty_available" type="measure"/>
+                <field name="qty_net" type="measure"/>
+                <field name="qty_ordered" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- ── Stock List View ────────────────────────────────────────────────── -->
+    <record id="crm_mt_stock_tree" model="ir.ui.view">
+        <field name="name">crm.mt.product.stock.tree</field>
+        <field name="model">crm.mt.product.stock</field>
+        <field name="arch" type="xml">
+            <list string="Stock Levels"
+                  decoration-danger="stock_status in ('out','critical')"
+                  decoration-warning="stock_status == 'low'"
+                  decoration-success="stock_status == 'ok'">
+                <field name="product_id"/>
+                <field name="product_name"/>
+                <field name="category_id"/>
+                <field name="qty_available" sum="Total Available"/>
+                <field name="qty_reserved" sum="Total Reserved"/>
+                <field name="qty_net" sum="Net"/>
+                <field name="qty_ordered" sum="On Order"/>
+                <field name="qty_min_alert" string="Min Alert"/>
+                <field name="stock_status" widget="badge"
+                       decoration-success="stock_status == 'ok'"
+                       decoration-warning="stock_status == 'low'"
+                       decoration-danger="stock_status in ('critical','out')"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ── Stock Form View ────────────────────────────────────────────────── -->
+    <record id="crm_mt_stock_form" model="ir.ui.view">
+        <field name="name">crm.mt.product.stock.form</field>
+        <field name="model">crm.mt.product.stock</field>
+        <field name="arch" type="xml">
+            <form string="Product Stock">
+                <sheet>
+                    <div class="alert alert-info d-flex gap-4 py-2 mb-3">
+                        <div class="text-center">
+                            <div class="fw-bold fs-4">
+                                <field name="qty_net" readonly="1"/>
+                            </div>
+                            <small>Net Available</small>
+                        </div>
+                        <div class="text-center">
+                            <field name="stock_status" widget="badge"
+                                   decoration-success="stock_status == 'ok'"
+                                   decoration-warning="stock_status == 'low'"
+                                   decoration-danger="stock_status in ('critical','out')"/>
+                            <div><small>Status</small></div>
+                        </div>
+                    </div>
+                    <group>
+                        <group string="Product">
+                            <field name="product_id"/>
+                            <field name="uom_id" readonly="1"/>
+                        </group>
+                        <group string="Quantities">
+                            <field name="qty_available"/>
+                            <field name="qty_reserved"/>
+                            <field name="qty_ordered"/>
+                            <field name="qty_min_alert"/>
+                            <field name="qty_to_reorder"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- ── Stock Search View ─────────────────────────────────────────────── -->
+    <record id="crm_mt_stock_search" model="ir.ui.view">
+        <field name="name">crm.mt.product.stock.search</field>
+        <field name="model">crm.mt.product.stock</field>
+        <field name="arch" type="xml">
+            <search string="Search Stock">
+                <field name="product_id"/>
+                <field name="category_id"/>
+                <filter string="Out of Stock" name="out_stock"
+                        domain="[('stock_status','=','out')]"/>
+                <filter string="Critical" name="critical"
+                        domain="[('stock_status','=','critical')]"/>
+                <filter string="Low" name="low"
+                        domain="[('stock_status','=','low')]"/>
+                <group>
+                    <filter string="Category" name="group_category"
+                            context="{'group_by': 'category_id'}"/>
+                    <filter string="Status" name="group_status"
+                            context="{'group_by': 'stock_status'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ── Stock Window Action ───────────────────────────────────────────── -->
+    <record id="action_crm_mt_stock" model="ir.actions.act_window">
+        <field name="name">Stock Overview — Flowmerce</field>
+        <field name="res_model">crm.mt.product.stock</field>
+        <field name="view_mode">list,form,graph,pivot</field>
+        <field name="search_view_id" ref="crm_mt_stock_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No stock entries yet. Add products to track inventory.
+            </p>
+        </field>
+    </record>
+
+</odoo>
