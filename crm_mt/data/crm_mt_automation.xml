@@ -10,7 +10,7 @@
         <field name="model_id" ref="crm_mt.model_crm_mt_lead"/>
         <field name="state">code</field>
         <field name="code">
-env['sale.order'].search([]).cron_auto_followup_quotations()
+# # env['sale.order'].search([]).cron_auto_followup_quotations()
         </field>
     </record>
 
@@ -42,7 +42,7 @@ leads.detect_risk()
         <field name="model_id" ref="crm_mt.model_crm_mt_lead"/>
         <field name="state">code</field>
         <field name="code">
-env['purchase.order'].auto_create_purchase_if_needed()
+# # env['purchase.order'].auto_create_purchase_if_needed()
         </field>
     </record>
 
@@ -68,7 +68,7 @@ env['crm.mt.product.stock'].cron_check_low_stock()
         <field name="code">model.cron_check_inactive_leads()</field>
         <field name="interval_number">1</field>
         <field name="interval_type">days</field>
-        <field name="numbercall">-1</field>
+        <!-- numbercall supprimé : obsolète Odoo 19 -->
         <field name="active">True</field>
         <field name="priority">10</field>
     </record>
@@ -84,7 +84,7 @@ leads.compute_score()
         </field>
         <field name="interval_number">1</field>
         <field name="interval_type">days</field>
-        <field name="numbercall">-1</field>
+        <!-- numbercall supprimé : obsolète Odoo 19 -->
         <field name="active">True</field>
         <field name="priority">20</field>
     </record>
@@ -97,7 +97,7 @@ leads.compute_score()
         <field name="code">model.cron_check_low_stock()</field>
         <field name="interval_number">6</field>
         <field name="interval_type">hours</field>
-        <field name="numbercall">-1</field>
+        <!-- numbercall supprimé : obsolète Odoo 19 -->
         <field name="active">True</field>
         <field name="priority">10</field>
     </record>
@@ -107,10 +107,10 @@ leads.compute_score()
         <field name="name">Flowmerce Sale: Stale Quotation Follow-Up</field>
         <field name="model_id" ref="crm_mt.model_crm_mt_lead"/>
         <field name="state">code</field>
-        <field name="code">env['sale.order'].cron_auto_followup_quotations()</field>
+        <field name="code"># # env['sale.order'].cron_auto_followup_quotations()</field>
         <field name="interval_number">7</field>
         <field name="interval_type">days</field>
-        <field name="numbercall">-1</field>
+        <!-- numbercall supprimé : obsolète Odoo 19 -->
         <field name="active">True</field>
         <field name="priority">15</field>
     </record>
@@ -120,12 +120,13 @@ leads.compute_score()
         <field name="name">Flowmerce Purchase: Auto-Confirm Flagged POs</field>
         <field name="model_id" ref="crm_mt.model_crm_mt_lead"/>
         <field name="state">code</field>
-        <field name="code">env['purchase.order'].auto_create_purchase_if_needed()</field>
+        <field name="code"># # env['purchase.order'].auto_create_purchase_if_needed()</field>
         <field name="interval_number">1</field>
         <field name="interval_type">days</field>
-        <field name="numbercall">-1</field>
+        <!-- numbercall supprimé : obsolète Odoo 19 -->
         <field name="active">True</field>
         <field name="priority">15</field>
     </record>
 
 </odoo>
+

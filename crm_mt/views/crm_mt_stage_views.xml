@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <kanban class="o_kanban_crm_stage">
                 <templates>
-                    <t t-name="kanban-box">
+                    <t t-name="card">
                         <div class="oe_kanban_card oe_kanban_global_click oe_kanban_hover">
                             <div class="o_kanban_header">
                                 <span class="o_kanban_record_title">

@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <kanban default_group_by="state" class="o_kanban_crm_sale">
                 <templates>
-                    <t t-name="kanban-box">
+                    <t t-name="card">
                         <div t-attf-class="oe_kanban_card oe_kanban_global_click o_kanban_#{record.priority.raw_value} o_kanban_state_#{record.state.raw_value} oe_kanban_hover">
                             <div class="o_kanban_header">
                                 <span class="o_kanban_record_title">

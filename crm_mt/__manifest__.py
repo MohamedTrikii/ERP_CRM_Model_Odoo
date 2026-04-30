@@ -29,6 +29,8 @@ Key Features:
         'mail',
         'utm',
         'product',
+        'sale',
+        'purchase',
     ],
     'data': [
         # Model declarations (must be first)
@@ -64,3 +66,4 @@ Key Features:
     'price': 0.00,
     'currency': 'EUR',
 }
+

@@ -165,10 +165,7 @@
                         </group>
                     </group>
                 </sheet>
-                <div class="oe_chatter">
-                    <field name="message_follower_ids"/>
-                    <field name="message_ids"/>
-                </div>
+                <!-- Chatter supprimé : les champs message_follower_ids et message_ids n'existent pas sur crm.mt.product.stock -->
             </form>
         </field>
     </record>
