@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'CRM_TRIKI ERP — CRM & Pipeline',
+    'name': 'ERP PROJECT IIT (CRM) MT & IB',
     'version': '19.0.2.0.0',
     'category': 'Sales/CRM',
     'sequence': 15,
     'summary': 'AI-powered CRM with pipeline, scoring, stock simulation and automations',
     'description': """
-CRM_TRIKI ERP — CRM & Pipeline Module
+ERP PROJECT IIT (CRM) MT & IB Module
 ======================================
 
 Key Features:

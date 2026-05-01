@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Ajouter au menu du portail -->
+    <template id="portal_my_home_menu_saas" name="Portal layout : SaaS menu entries" inherit_id="portal.portal_breadcrumbs" priority="20">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'license'" class="breadcrumb-item active">
+                Mes Licences SaaS
+            </li>
+        </xpath>
+    </template>
+
+    <template id="portal_my_home_saas" name="Show SaaS Licenses" inherit_id="portal.portal_my_home" customize_show="True" priority="30">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Licences Logiciels</t>
+                <t t-set="url" t-value="'/my/licenses'"/>
+                <t t-set="placeholder_count" t-value="'saas_license_count'"/>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- Page Mes Licences -->
+    <template id="portal_my_licenses" name="Mes Licences SaaS">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Mes Licences</t>
+            </t>
+            <t t-if="not licenses">
+                <p class="alert alert-warning mt-3">Vous n'avez aucune licence logicielle active.</p>
+            </t>
+            <t t-if="licenses">
+                <div class="row mt-4">
+                    <t t-foreach="licenses" t-as="lic">
+                        <div class="col-md-6 mb-4">
+                            <div class="card shadow-sm border-0 saas-card">
+                                <div class="card-body">
+                                    <h5 class="card-title fw-bold text-primary">
+                                        <i class="fa fa-key me-2"></i> <t t-esc="lic.product_id.name"/>
+                                    </h5>
+                                    <hr/>
+                                    <p class="mb-1"><strong>Clé :</strong> <code class="bg-light p-1 rounded text-dark"><t t-esc="lic.name"/></code></p>
+                                    <p class="mb-1">
+                                        <strong>Statut :</strong> 
+                                        <span t-attf-class="badge #{'bg-success' if lic.state == 'active' else 'bg-secondary'} rounded-pill">
+                                            <t t-esc="dict(lic.fields_get(allfields=['state'])['state']['selection'])[lic.state]"/>
+                                        </span>
+                                    </p>
+                                    <p class="mb-0 text-muted small">Activée le : <t t-esc="lic.activation_date" t-options="{'widget': 'date'}"/></p>
+                                </div>
+                                <div class="card-footer bg-white border-0 text-end">
+                                    <a href="#" class="btn btn-sm btn-outline-primary rounded-pill"><i class="fa fa-download"></i> Télécharger Logiciel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

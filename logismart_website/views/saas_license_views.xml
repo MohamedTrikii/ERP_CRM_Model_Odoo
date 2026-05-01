@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_saas_license_form" model="ir.ui.view">
+        <field name="name">logismart.saas.license.form</field>
+        <field name="model">logismart.saas.license</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="product_id"/>
+                            <field name="sale_line_id"/>
+                        </group>
+                        <group>
+                            <field name="activation_date"/>
+                            <field name="expiration_date"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

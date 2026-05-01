@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Flowmerce ERP — Enhanced CRM Lead model (Odoo 19).
+LogiSmart ERP — Enhanced CRM Lead model (Odoo 19).
 AI-powered scoring, risk detection, automatic segmentation.
 """
 import math
@@ -15,11 +15,11 @@ _logger = logging.getLogger(__name__)
 
 class CrmMtLead(models.Model):
     """
-    Lead/Opportunity — Flowmerce ERP
+    Lead/Opportunity — LogiSmart ERP
     Includes AI scoring, segmentation, risk detection.
     """
     _name = 'crm.mt.lead'
-    _description = 'Lead/Opportunity (Flowmerce ERP)'
+    _description = 'Lead/Opportunity (LogiSmart ERP)'
     _inherit = ['mail.thread', 'mail.activity.mixin', 'utm.mixin']
     _order = 'priority desc, lead_score desc, id desc'
 

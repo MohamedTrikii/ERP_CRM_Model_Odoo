@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!-- ══════════════════════════════════════════════════════════════════════
-         Flowmerce ERP — CRM Lead Views (Kanban, Form, List, Search, Graph, Pivot)
+         LogiSmart ERP — CRM Lead Views (Kanban, Form, List, Search, Graph, Pivot)
          ══════════════════════════════════════════════════════════════════════ -->
 
     <!-- ── Kanban View ────────────────────────────────────────────────────── -->

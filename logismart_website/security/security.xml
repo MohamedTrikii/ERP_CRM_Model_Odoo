@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="module_category_logismart_website" model="ir.module.category">
+        <field name="name">LogiSmart Website</field>
+    </record>
+    <record id="group_logismart_website_user" model="res.groups">
+        <field name="name">User</field>
+        
+    </record>
+</odoo>

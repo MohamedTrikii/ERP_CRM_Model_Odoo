@@ -62,7 +62,7 @@ env['crm.mt.product.stock'].cron_check_low_stock()
 
     <!-- ── Cron 1: Check Inactive Leads (daily) ───────────────────────────── -->
     <record id="cron_check_inactive_leads" model="ir.cron">
-        <field name="name">Flowmerce CRM: Check Inactive Leads</field>
+        <field name="name">LogiSmart MT: Check Inactive Leads</field>
         <field name="model_id" ref="crm_mt.model_crm_mt_lead"/>
         <field name="state">code</field>
         <field name="code">model.cron_check_inactive_leads()</field>
@@ -75,7 +75,7 @@ env['crm.mt.product.stock'].cron_check_low_stock()
 
     <!-- ── Cron 2: Recompute Lead Scores (daily) ─────────────────────────── -->
     <record id="cron_recompute_lead_scores" model="ir.cron">
-        <field name="name">Flowmerce CRM: Recompute Lead Scores</field>
+        <field name="name">LogiSmart MT: Recompute Lead Scores</field>
         <field name="model_id" ref="crm_mt.model_crm_mt_lead"/>
         <field name="state">code</field>
         <field name="code">
@@ -91,7 +91,7 @@ leads.compute_score()
 
     <!-- ── Cron 3: Check Low Stock &amp; Trigger Auto-PO (every 6 hours) ─── -->
     <record id="cron_check_low_stock" model="ir.cron">
-        <field name="name">Flowmerce Stock: Check Low Stock</field>
+        <field name="name">LogiSmart Stock: Check Low Stock</field>
         <field name="model_id" ref="crm_mt.model_crm_mt_product_stock"/>
         <field name="state">code</field>
         <field name="code">model.cron_check_low_stock()</field>
@@ -104,7 +104,7 @@ leads.compute_score()
 
     <!-- ── Cron 4: Stale Quotation Follow-Up (weekly) ────────────────────── -->
     <record id="cron_followup_quotations" model="ir.cron">
-        <field name="name">Flowmerce Sale: Stale Quotation Follow-Up</field>
+        <field name="name">LogiSmart Sale: Stale Quotation Follow-Up</field>
         <field name="model_id" ref="crm_mt.model_crm_mt_lead"/>
         <field name="state">code</field>
         <field name="code"># # env['sale.order'].cron_auto_followup_quotations()</field>
@@ -117,7 +117,7 @@ leads.compute_score()
 
     <!-- ── Cron 5: Auto-Confirm Flagged Purchase Orders (daily) ─────────── -->
     <record id="cron_auto_confirm_purchases" model="ir.cron">
-        <field name="name">Flowmerce Purchase: Auto-Confirm Flagged POs</field>
+        <field name="name">LogiSmart Purchase: Auto-Confirm Flagged POs</field>
         <field name="model_id" ref="crm_mt.model_crm_mt_lead"/>
         <field name="state">code</field>
         <field name="code"># # env['purchase.order'].auto_create_purchase_if_needed()</field>

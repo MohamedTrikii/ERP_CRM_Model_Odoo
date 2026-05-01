@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Template de la Page de Contact -->
+    <template id="contact_page_template" name="Contactez LogiSmart MT">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure">
+                <section class="s_title pt48 pb24" style="background: linear-gradient(135deg, #1e1b4b 0%, #4f46e5 100%); color: white;">
+                    <div class="container text-center">
+                        <h1 class="display-3 fw-bold">Contactez nos Experts</h1>
+                        <p class="lead">Prêt à propulser votre entreprise avec LogiSmart MT ?</p>
+                    </div>
+                </section>
+
+                <section class="s_text_block pt40 pb40">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-7">
+                                <div class="card shadow-lg border-0 p-4">
+                                    <form action="/contact/submit" method="post" class="s_website_form" enctype="multipart/form-data">
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold">Nom Complet</label>
+                                            <input type="text" name="name" class="form-control form-control-lg" placeholder="Jean Dupont" required="1"/>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold">Email Professionnel</label>
+                                            <input type="email" name="email" class="form-control form-control-lg" placeholder="jean@entreprise.com" required="1"/>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold">Téléphone</label>
+                                            <input type="tel" name="phone" class="form-control form-control-lg" placeholder="+216 ..."/>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold">Sujet</label>
+                                            <select name="subject" class="form-select form-select-lg">
+                                                <option value="demo">Demander une démonstration</option>
+                                                <option value="pricing">Infos sur les tarifs SaaS</option>
+                                                <option value="support">Support Technique</option>
+                                                <option value="other">Autre demande</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold">Votre Message</label>
+                                            <textarea name="message" class="form-control" rows="5" placeholder="Dites-nous en plus sur votre projet..."></textarea>
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-primary btn-lg px-5 shadow">Envoyer ma demande</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-lg-5 ps-lg-5">
+                                <h3 class="fw-bold mt-4">Nos Coordonnées</h3>
+                                <p class="text-muted">Nous répondons généralement en moins de 2 heures.</p>
+                                <div class="mt-4">
+                                    <div class="d-flex mb-3">
+                                        <i class="fa fa-envelope fa-2x text-primary me-3"></i>
+                                        <div>
+                                            <h6 class="fw-bold mb-0">Email</h6>
+                                            <p>contact@logismart-mt.com</p>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex mb-3">
+                                        <i class="fa fa-phone fa-2x text-primary me-3"></i>
+                                        <div>
+                                            <h6 class="fw-bold mb-0">Téléphone</h6>
+                                            <p>+216 71 000 000</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+
+    <!-- Page de Remerciement -->
+    <template id="contact_thanks_template" name="Merci !">
+        <t t-call="website.layout">
+            <div id="wrap" class="container text-center pt80 pb80">
+                <i class="fa fa-check-circle fa-5x text-success mb-4"></i>
+                <h1 class="display-4 fw-bold">Demande Envoyée !</h1>
+                <p class="lead mb-5">Merci <t t-esc="lead.partner_name"/>. Un expert LogiSmart va analyser votre projet et vous recontacter très rapidement.</p>
+                <a href="/" class="btn btn-primary btn-lg shadow">Retour à l'accueil</a>
+            </div>
+        </t>
+    </template>
+</odoo>

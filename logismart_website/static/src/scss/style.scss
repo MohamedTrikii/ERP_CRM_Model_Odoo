@@ -1,0 +1,21 @@
+.text-gradient {
+    background: linear-gradient(90deg, #4f46e5 0%, #0ea5e9 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.saas-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 1rem;
+}
+.saas-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+}
+.btn-primary {
+    background-color: #4f46e5;
+    border-color: #4f46e5;
+}
+.btn-primary:hover {
+    background-color: #4338ca;
+    border-color: #4338ca;
+}

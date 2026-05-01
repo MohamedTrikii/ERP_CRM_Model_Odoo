@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!-- ══════════════════════════════════════════════════════════════════════
-         Flowmerce ERP — CRM Dashboard (graph + pivot + activity view)
+         LogiSmart ERP — CRM Dashboard (graph + pivot + activity view)
          ══════════════════════════════════════════════════════════════════════ -->
 
     <!-- ── Revenue Pipeline — Bar Chart ──────────────────────────────────── -->
@@ -49,7 +49,7 @@
         <field name="model">crm.mt.lead</field>
         <field name="priority">20</field>
         <field name="arch" type="xml">
-            <pivot string="CRM Analysis — Flowmerce ERP">
+            <pivot string="Analyse CRM — LogiSmart CRM MT">
                 <field name="stage_id" type="row"/>
                 <field name="segment_client" type="row"/>
                 <field name="user_id" type="col"/>
@@ -62,7 +62,7 @@
 
     <!-- ── Dashboard Action: CRM Overview ────────────────────────────────── -->
     <record id="action_crm_dashboard" model="ir.actions.act_window">
-        <field name="name">CRM Dashboard — Flowmerce</field>
+        <field name="name">Dashboard LogiSmart MT</field>
         <field name="res_model">crm.mt.lead</field>
         <field name="view_mode">graph,pivot,list</field>
         <field name="search_view_id" ref="crm_mt_lead_search"/>
@@ -196,7 +196,7 @@
 
     <!-- ── Stock Window Action ───────────────────────────────────────────── -->
     <record id="action_crm_mt_stock" model="ir.actions.act_window">
-        <field name="name">Stock Overview — Flowmerce</field>
+        <field name="name">Stock Overview — LogiSmart</field>
         <field name="res_model">crm.mt.product.stock</field>
         <field name="view_mode">list,form,graph,pivot</field>
         <field name="search_view_id" ref="crm_mt_stock_search"/>

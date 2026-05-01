@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="saas_homepage_override" inherit_id="website.homepage" name="SaaS Modern Homepage" priority="99">
+        <xpath expr="//div[@id='wrap']" position="replace">
+            <div id="wrap" class="oe_structure oe_empty" style="font-family: 'Inter', sans-serif;">
+                
+                <!-- 🌟 HERO SECTION (Stripe/Notion Style) -->
+                <section class="pt128 pb128 position-relative overflow-hidden" style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); color: white;">
+                    <!-- Décoration SVG de fond -->
+                    <div class="position-absolute top-0 start-0 w-100 h-100 opacity-25" style="background-image: radial-gradient(circle at 50% 50%, #4f46e5 0%, transparent 50%);"></div>
+                    
+                    <div class="container position-relative z-index-1">
+                        <div class="row align-items-center">
+                            <div class="col-lg-6 text-center text-lg-start pe-lg-5">
+                                <span class="badge bg-primary text-white rounded-pill px-3 py-2 mb-4 shadow-sm" style="background: linear-gradient(90deg, #4f46e5, #0ea5e9);">✨ Nouveauté Odoo 19</span>
+                                <h1 class="display-3 fw-bold mb-4" style="line-height: 1.1;">
+                                    Gérez, Vendez et Scalez avec <span style="background: linear-gradient(90deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">LogiSmart</span>
+                                </h1>
+                                <p class="lead mb-5 text-light opacity-75" style="font-size: 1.25rem;">
+                                    La plateforme ERP et eCommerce 100% intégrée pour les entreprises modernes. Vendez vos logiciels, gérez vos abonnements SaaS et automatisez votre comptabilité.
+                                </p>
+                                <div class="d-flex flex-column flex-sm-row justify-content-center justify-content-lg-start gap-3">
+                                    <a href="/software" class="btn btn-light btn-lg rounded-pill fw-bold px-5 py-3 shadow-lg" style="color: #1e1b4b; transition: transform 0.2s;">Commencer l'essai gratuit</a>
+                                    <a href="#features" class="btn btn-outline-light btn-lg rounded-pill fw-bold px-5 py-3" style="border-width: 2px;">Voir la démo</a>
+                                </div>
+                                <div class="mt-4 text-light opacity-50 small">
+                                    <i class="fa fa-check-circle text-success me-1"></i> Sans carte de crédit • <i class="fa fa-check-circle text-success me-1 ms-3"></i> Annulation à tout moment
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mt-5 mt-lg-0">
+                                <div class="position-relative">
+                                    <div class="position-absolute top-50 start-50 translate-middle w-100 h-100 bg-primary rounded-circle blur-lg opacity-25" style="filter: blur(80px);"></div>
+                                    <img src="/web/image/website.s_showcase_image_1" class="img-fluid rounded-4 shadow-lg border border-light border-opacity-10 position-relative" alt="Dashboard Preview" style="transform: perspective(1000px) rotateY(-10deg) rotateX(5deg);"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 🚀 FEATURES SECTION -->
+                <section id="features" class="pt96 pb96 bg-light">
+                    <div class="container">
+                        <div class="text-center mb-5 pb-3">
+                            <h2 class="display-5 fw-bold text-dark">Tout ce dont vous avez besoin</h2>
+                            <p class="lead text-muted mx-auto" style="max-width: 700px;">Des outils puissants conçus pour maximiser vos ventes de logiciels et fidéliser vos clients.</p>
+                        </div>
+                        <div class="row g-4">
+                            <!-- Feature 1 -->
+                            <div class="col-md-4">
+                                <div class="card h-100 border-0 shadow-sm rounded-4 p-4 saas-card bg-white" style="transition: all 0.3s ease;">
+                                    <div class="d-inline-flex align-items-center justify-content-center bg-primary bg-opacity-10 text-primary rounded-4 mb-4" style="width: 64px; height: 64px;">
+                                        <i class="fa fa-key fa-2x"></i>
+                                    </div>
+                                    <h4 class="fw-bold">Génération de Licences</h4>
+                                    <p class="text-muted mb-0">Création automatique de clés d'activation dès la validation du paiement.</p>
+                                </div>
+                            </div>
+                            <!-- Feature 2 -->
+                            <div class="col-md-4">
+                                <div class="card h-100 border-0 shadow-sm rounded-4 p-4 saas-card bg-white" style="transition: all 0.3s ease;">
+                                    <div class="d-inline-flex align-items-center justify-content-center bg-success bg-opacity-10 text-success rounded-4 mb-4" style="width: 64px; height: 64px;">
+                                        <i class="fa fa-refresh fa-2x"></i>
+                                    </div>
+                                    <h4 class="fw-bold">Abonnements Récurrents</h4>
+                                    <p class="text-muted mb-0">Facturez mensuellement ou annuellement sans intervention manuelle.</p>
+                                </div>
+                            </div>
+                            <!-- Feature 3 -->
+                            <div class="col-md-4">
+                                <div class="card h-100 border-0 shadow-sm rounded-4 p-4 saas-card bg-white" style="transition: all 0.3s ease;">
+                                    <div class="d-inline-flex align-items-center justify-content-center bg-info bg-opacity-10 text-info rounded-4 mb-4" style="width: 64px; height: 64px;">
+                                        <i class="fa fa-bar-chart fa-2x"></i>
+                                    </div>
+                                    <h4 class="fw-bold">Dashboard CRM</h4>
+                                    <p class="text-muted mb-0">Suivez vos Leads et analysez le comportement de vos clients en direct.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 💰 PRICING SECTION -->
+                <section class="pt96 pb96 bg-white">
+                    <div class="container">
+                        <div class="text-center mb-5 pb-3">
+                            <h2 class="display-5 fw-bold text-dark">Une tarification claire</h2>
+                            <p class="lead text-muted mx-auto" style="max-width: 600px;">Pas de frais cachés. Choisissez le plan adapté à votre croissance.</p>
+                        </div>
+                        <div class="row justify-content-center align-items-center g-4">
+                            <!-- Plan Starter -->
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card border-0 shadow-sm rounded-4 text-center p-5 saas-card">
+                                    <h4 class="fw-bold text-muted mb-3">Starter</h4>
+                                    <h2 class="display-4 fw-bold mb-3 text-dark">29€<span class="fs-5 text-muted fw-normal">/mois</span></h2>
+                                    <p class="text-muted mb-4">Pour les créateurs indépendants.</p>
+                                    <ul class="list-unstyled text-start mb-4">
+                                        <li class="mb-2"><i class="fa fa-check text-primary me-2"></i> 100 Licences / mois</li>
+                                        <li class="mb-2"><i class="fa fa-check text-primary me-2"></i> Support par email</li>
+                                        <li class="mb-2"><i class="fa fa-check text-primary me-2"></i> Intégration Stripe</li>
+                                    </ul>
+                                    <a href="/software" class="btn btn-outline-dark rounded-pill py-2 fw-bold">Commencer</a>
+                                </div>
+                            </div>
+                            <!-- Plan Pro -->
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card border-0 shadow-lg rounded-4 text-center p-5 position-relative" style="background: linear-gradient(180deg, #1e1b4b 0%, #0f172a 100%); color: white; transform: scale(1.05); z-index: 2;">
+                                    <div class="position-absolute top-0 start-50 translate-middle badge bg-primary rounded-pill px-3 py-2 text-uppercase fw-bold" style="letter-spacing: 1px;">Le Plus Populaire</div>
+                                    <h4 class="fw-bold text-light opacity-75 mb-3">Pro</h4>
+                                    <h2 class="display-4 fw-bold mb-3 text-white">99€<span class="fs-5 text-light opacity-50 fw-normal">/mois</span></h2>
+                                    <p class="text-light opacity-75 mb-4">Pour les startups SaaS en croissance.</p>
+                                    <ul class="list-unstyled text-start mb-4">
+                                        <li class="mb-2"><i class="fa fa-check text-info me-2"></i> Licences Illimitées</li>
+                                        <li class="mb-2"><i class="fa fa-check text-info me-2"></i> Support Prioritaire 24/7</li>
+                                        <li class="mb-2"><i class="fa fa-check text-info me-2"></i> CRM et Automatisations</li>
+                                        <li class="mb-2"><i class="fa fa-check text-info me-2"></i> Portail Client dédié</li>
+                                    </ul>
+                                    <a href="/software" class="btn btn-primary rounded-pill py-3 fw-bold w-100 shadow-sm" style="background: linear-gradient(90deg, #4f46e5, #0ea5e9); border: none;">Prendre le Plan Pro</a>
+                                </div>
+                            </div>
+                            <!-- Plan Enterprise -->
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card border-0 shadow-sm rounded-4 text-center p-5 saas-card">
+                                    <h4 class="fw-bold text-muted mb-3">Entreprise</h4>
+                                    <h2 class="display-4 fw-bold mb-3 text-dark">Sur Mesure</h2>
+                                    <p class="text-muted mb-4">Pour les volumes importants.</p>
+                                    <ul class="list-unstyled text-start mb-4">
+                                        <li class="mb-2"><i class="fa fa-check text-primary me-2"></i> Tout du Plan Pro</li>
+                                        <li class="mb-2"><i class="fa fa-check text-primary me-2"></i> Account Manager</li>
+                                        <li class="mb-2"><i class="fa fa-check text-primary me-2"></i> API Accès Complet</li>
+                                    </ul>
+                                    <a href="/contactus" class="btn btn-outline-dark rounded-pill py-2 fw-bold">Nous contacter</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 💬 TESTIMONIALS -->
+                <section class="pt96 pb96 bg-light border-top">
+                    <div class="container">
+                        <div class="text-center mb-5 pb-3">
+                            <h2 class="display-5 fw-bold text-dark">Nos clients nous adorent</h2>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                                    <div class="text-warning mb-3">
+                                        <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                                    </div>
+                                    <p class="lead text-muted">"LogiSmart a totalement transformé notre façon de distribuer nos logiciels. L'automatisation des licences est magique."</p>
+                                    <div class="d-flex align-items-center mt-auto">
+                                        <div class="bg-primary rounded-circle me-3" style="width: 48px; height: 48px;"></div>
+                                        <div>
+                                            <h6 class="fw-bold mb-0">Sarah Jenkins</h6>
+                                            <small class="text-muted">CEO, TechStartup</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                                    <div class="text-warning mb-3">
+                                        <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                                    </div>
+                                    <p class="lead text-muted">"L'intégration avec le CRM Odoo permet à nos commerciaux d'avoir une vue à 360° sur l'utilisation des clients."</p>
+                                    <div class="d-flex align-items-center mt-auto">
+                                        <div class="bg-success rounded-circle me-3" style="width: 48px; height: 48px;"></div>
+                                        <div>
+                                            <h6 class="fw-bold mb-0">Marc Dubois</h6>
+                                            <small class="text-muted">CTO, DevCloud</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 📢 CTA FOOTER -->
+                <section class="pt96 pb96 position-relative overflow-hidden" style="background: linear-gradient(90deg, #4f46e5 0%, #0ea5e9 100%);">
+                    <div class="container position-relative z-index-1 text-center">
+                        <h2 class="display-4 fw-bold text-white mb-4">Prêt à propulser vos ventes ?</h2>
+                        <p class="lead text-light opacity-75 mx-auto mb-5" style="max-width: 600px;">Rejoignez les entreprises qui utilisent LogiSmart pour vendre leurs abonnements SaaS en toute simplicité.</p>
+                        <a href="/software" class="btn btn-light btn-lg rounded-pill fw-bold px-5 py-3 shadow-lg" style="color: #4f46e5;">Créer mon Espace Gratuit</a>
+                    </div>
+                </section>
+                
+            </div>
+        </xpath>
+    </template>
+</odoo>

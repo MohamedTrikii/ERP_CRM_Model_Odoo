@@ -59,7 +59,7 @@
     </record>
 
     <!-- Menus -->
-    <menuitem id="crm_mt_root_menu" name="Flowmerce CRM" sequence="20"/>
+    <menuitem id="crm_mt_root_menu" name="LogiSmart MT" sequence="20"/>
 
     <menuitem id="crm_mt_menu_dashboard"
               name="Dashboard"

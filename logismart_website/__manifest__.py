@@ -1,0 +1,36 @@
+# -*- coding: utf-8 -*-
+{
+    'name': 'LogiSmart Website & SaaS eCommerce',
+    'version': '19.0.1.0.0',
+    'category': 'Website/eCommerce',
+    'sequence': 10,
+    'summary': 'Vente de logiciels, licences SaaS et abonnements',
+    'description': "Module eCommerce complet pour LogiSmart ERP. Vente de licences SaaS, portail client, et intégration CRM.",
+    'author': 'LogiSmart TRIKI',
+    'depends': ['website', 'website_sale', 'crm_mt', 'sale_management', 'account'],
+    'data': [
+        'security/security.xml',
+        'security/ir.model.access.csv',
+        'data/cron_jobs.xml',
+        'data/email_templates.xml',
+        'views/product_template_views.xml',
+        'views/saas_license_views.xml',
+        'views/website_templates.xml',
+        'views/menus.xml',
+        'views/portal_templates.xml',
+        'views/portal_templates.xml',
+        'views/homepage_templates.xml',
+        'views/sale_order_views.xml',
+        'views/deep_links_views.xml',
+        'views/contact_templates.xml',
+        'views/website_crm_link.xml',
+    ],
+    'assets': {
+        'web.assets_frontend': [
+            'logismart_website/static/src/scss/style.scss',
+        ],
+    },
+    'installable': True,
+    'application': True,
+    'license': 'LGPL-3',
+}

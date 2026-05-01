@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Smart Buttons Partner -->
+    <record id="view_partner_form_inherit_saas" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.saas</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_view_saas_licenses" type="object" class="oe_stat_button" icon="fa-key" invisible="saas_license_count == 0">
+                    <field name="saas_license_count" widget="statinfo" string="Licences SaaS"/>
+                </button>
+                <button name="action_view_crm_leads" type="object" class="oe_stat_button" icon="fa-users" invisible="crm_mt_lead_count == 0">
+                    <field name="crm_mt_lead_count" widget="statinfo" string="Leads CRM"/>
+                </button>
+            </div>
+        </field>
+    </record>
+
+    <!-- Smart Button Product -->
+    <record id="product_template_form_view_inherit_saas" model="ir.ui.view">
+        <field name="name">product.template.form.inherit.saas</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_view_licenses" type="object" class="oe_stat_button" icon="fa-key" invisible="not is_saas_software">
+                    <field name="license_count" widget="statinfo" string="Licences"/>
+                </button>
+            </div>
+        </field>
+    </record>
+</odoo>

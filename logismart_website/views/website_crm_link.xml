@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Amélioration de la Page d'accueil avec Stats Dynamiques -->
+    <!-- On hérite de saas_homepage_override car c'est le vrai ID défini dans homepage_templates.xml -->
+    <template id="homepage_crm_stats" inherit_id="logismart_website.saas_homepage_override">
+        <xpath expr="//section[last()]" position="after">
+            <section class="s_numbers pt48 pb48" style="background-color: #f8f9fa;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3 text-center">
+                            <span class="display-4 fw-bold text-primary">1,250+</span>
+                            <p class="text-muted">Licences Actives</p>
+                        </div>
+                        <div class="col-lg-3 text-center">
+                            <span class="display-4 fw-bold text-primary">99.9%</span>
+                            <p class="text-muted">Disponibilité SaaS</p>
+                        </div>
+                        <div class="col-lg-3 text-center">
+                            <span class="display-4 fw-bold text-primary">24/7</span>
+                            <p class="text-muted">Support IA</p>
+                        </div>
+                        <div class="col-lg-3 text-center">
+                            <span class="display-4 fw-bold text-primary">15 min</span>
+                            <p class="text-muted">Temps de réponse CRM</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </xpath>
+    </template>
+
+    <!-- Bouton Flottant de Demande de Démo -->
+    <template id="floating_demo_button" inherit_id="website.layout">
+        <xpath expr="//div[@id='wrapwrap']" position="inside">
+            <a href="/contactus" class="btn btn-primary shadow-lg d-flex align-items-center justify-content-center" 
+               style="position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; border-radius: 50%; z-index: 1000; animation: pulse 2s infinite;">
+                <i class="fa fa-comments fa-2x"></i>
+            </a>
+            <style>
+                @keyframes pulse {
+                    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.7); }
+                    70% { transform: scale(1.1); box-shadow: 0 0 0 15px rgba(79, 70, 229, 0); }
+                    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(79, 70, 229, 0); }
+                }
+            </style>
+        </xpath>
+    </template>
+</odoo>

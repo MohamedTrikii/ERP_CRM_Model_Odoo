@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="email_template_saas_license" model="mail.template">
+            <field name="name">SaaS: Livraison de Licence</field>
+            <field name="model_id" ref="logismart_website.model_logismart_saas_license"/>
+            <field name="subject">Bienvenue ! Voici votre clé d'activation pour {{ object.product_id.name }}</field>
+            <field name="email_to">{{ object.partner_id.email }}</field>
+            <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px; font-family: 'Inter', sans-serif;">
+    <p style="margin: 0px; padding: 0px; font-size: 14px; color: #333;">
+        Bonjour <strong><t t-out="object.partner_id.name or ''"/></strong>,<br/><br/>
+        Félicitations et merci pour votre commande ! Votre logiciel <strong><t t-out="object.product_id.name"/></strong> est maintenant prêt à être utilisé.
+        <br/><br/>
+        Voici votre clé d'activation personnelle et unique :
+        <div style="margin: 20px 0px; padding: 15px; background: linear-gradient(90deg, #f8f9fa, #e0e7ff); border-radius: 8px; border-left: 5px solid #4f46e5; font-family: monospace; font-size: 18px; font-weight: bold; color: #1e1b4b; text-align: center;">
+            <t t-out="object.name"/>
+        </div>
+        <br/>
+        Vous pouvez télécharger votre logiciel et retrouver cette clé à tout moment dans votre 
+        <a t-att-href="object.get_base_url() + '/my/licenses'" style="color: #4f46e5; text-decoration: none; font-weight: bold;">Espace Client Sécurisé</a>.
+        <br/><br/>
+        Si vous avez besoin d'aide pour l'installation, notre IA de support client est à votre disposition 24/7 sur notre site web.<br/><br/>
+        L'équipe LogiSmart.<br/>
+        <span style="font-size: 11px; color: #888;">Ceci est un email automatique, veuillez ne pas y répondre directement.</span>
+    </p>
+</div>
+            </field>
+        </record>
+    </data>
+</odoo>
