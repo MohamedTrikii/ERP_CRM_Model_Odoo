@@ -40,6 +40,57 @@
 - **Methods**: `evaluate_supplier()`, `auto_create_purchase_if_needed()`
 - **Dashboard**: spend by supplier, delivery risk distribution, pivot analysis
 
+---
+
+## 🔁 **Schéma Processus CRM & Ventes**
+
+```mermaid
+flowchart TD
+
+%% Début
+A[Début : Nouveau Lead]
+
+%% Qualification du Lead
+A --> B[Entrée dans le pipeline CRM<br>Attribuer équipe, responsable, priorité]
+B --> C[Scoring IA, segmentation automatique,<br>détection de risque]
+
+%% Pipeline (Etapes du Kanban)
+C --> D1[Etape : Nouveau]
+D1 --> D2[Etape : Qualifié]
+D2 --> D3[Etape : Proposition]
+D3 --> D4[Etape : Négociation]
+
+%% 1. Cas Gagné
+D4 --> E{Deal gagné ?}
+E -- Oui --> F[Mark 'Gagné', convertir le lead<br>en commande de vente]
+
+%% Conversion Devis → Commande
+F --> G[Créer Devis CRM<br>Associer lignes produits & montant]
+G --> H[Workflow vente :<br>Brouillon → Envoyé → Confirmé → Livré → Facturé]
+
+%% 2. Cas Perte
+E -- Non --> I[Mark 'Perdu'<br>enregistrer raison de perte<br>(ex : trop cher, concurrent, pas de réponse)]
+
+%% 3. Automatisations & relances
+D1 --> J[Déclencher automations :<br>- Relance emails/tâches (cron)<br>- Recalcule scoring<br>- Passage automatique étape (si critère atteint)<br>- Relance inactivité]
+D2 --> J
+D3 --> J
+D4 --> J
+
+%% 4. Cas Achat Automatique (stock)
+H --> K{Stock faible ?}
+K -- Oui --> L[Générer auto-commande achat CRM]
+L --> M[Workflow achat :<br>Brouillon → Envoyé → Confirmé → Reçu → Facturé]
+K -- Non --> N[Fin vente]
+
+%% Fin
+I --> FIN1([Fin du cycle - lead perdu])
+M --> FIN2([Fin du cycle - achat/vente complété])
+N --> FIN3([Fin du cycle - vente complétée])
+```
+
+---
+
 ## Installation Order
 1. `crm_mt` — base module (no custom deps)
 2. `sale` — depends on crm_mt
