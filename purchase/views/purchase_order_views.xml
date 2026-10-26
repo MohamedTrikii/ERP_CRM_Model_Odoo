@@ -97,10 +97,6 @@
                             <field name="priority" widget="priority"/>
                         </group>
                     </group>
-                            <field name="currency_id" groups="base.group_multi_currency"/>
-                            <field name="priority" widget="priority"/>
-                        </group>
-                    </group>
                     <notebook>
                         <page string="Order Lines" name="order_lines">
                             <field name="order_line"
