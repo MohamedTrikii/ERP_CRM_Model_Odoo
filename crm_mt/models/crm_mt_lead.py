@@ -23,10 +23,10 @@ class CrmMtLead(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin', 'utm.mixin']
     _order = 'priority desc, lead_score desc, id desc'
 
-    _sql_constraints = [
-        ('probability_range', 'CHECK(probability >= 0 AND probability <= 100)',
-         'Probability must be between 0 and 100.'),
-    ]
+    _probability_range = models.Constraint(
+        'CHECK(probability >= 0 AND probability <= 100)',
+        'Probability must be between 0 and 100.',
+    )
 
     # ── Core Fields ───────────────────────────────────────────────────────────
     name = fields.Char('Title', required=True, tracking=True, index=True)

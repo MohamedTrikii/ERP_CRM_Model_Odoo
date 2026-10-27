@@ -1,6 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_sale_order_user,sale.order user,model_sale_order,crm_mt.group_flowmerce_sales,1,1,1,0
-access_sale_order_manager,sale.order manager,model_sale_order,crm_mt.group_flowmerce_manager,1,1,1,1
-access_sale_order_line_user,sale.order.line user,model_sale_order_line,crm_mt.group_flowmerce_sales,1,1,1,0
-access_sale_order_line_manager,sale.order.line manager,model_sale_order_line,crm_mt.group_flowmerce_manager,1,1,1,1
-access_sale_invoice_wizard,sale.invoice.wizard user,model_sale_invoice_wizard,crm_mt.group_flowmerce_user,1,1,1,1

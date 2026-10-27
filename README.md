@@ -16,8 +16,8 @@
 | Module | Purpose | Depends on |
 |---|---|---|
 | [`crm_mt`](crm_mt/) | CRM pipeline, scoring, segmentation, stock simulation, automations | `base`, `mail`, `utm`, `product` |
-| [`sale`](sale/) | Quotations & sales orders, margins, payment status, invoice wizard | `crm_mt`, `product`, `uom` |
-| [`purchase`](purchase/) | Purchase orders, supplier scoring, delivery risk, auto-order | `crm_mt`, `product`, `uom` |
+| [`flowmerce_sale`](flowmerce_sale/) | Quotations & sales orders, margins, payment status, invoice wizard | `crm_mt`, `product`, `uom` |
+| [`flowmerce_purchase`](flowmerce_purchase/) | Purchase orders, supplier scoring, delivery risk, auto-order | `crm_mt`, `product`, `uom` |
 | [`logismart_website`](logismart_website/) | Website & eCommerce for SaaS licences, customer portal (`/my/licenses`), contact form → CRM lead | `website`, `website_sale`, `crm_mt` |
 
 ## ✨ Highlights
@@ -28,9 +28,9 @@
 - Kanban pipeline with stages, teams, lost reasons and chatter.
 - **Stock simulation** (`crm.mt.product.stock`): available / reserved / net quantity with an automatic purchase trigger.
 
-**Sales (`sale`)** — line and order **margins**, cost price auto-filled from the product, global discount, payment status (unpaid / partial / paid), automatic confirmation and invoicing, revenue & margin dashboards.
+**Sales (`flowmerce_sale`)** — line and order **margins**, cost price auto-filled from the product, global discount, payment status (unpaid / partial / paid), automatic confirmation and invoicing, revenue & margin dashboards.
 
-**Purchase (`purchase`)** — **supplier score** (0–100), **delivery-risk** prediction, auto-order flag confirmed by cron, line discounts, spend & risk dashboards.
+**Purchase (`flowmerce_purchase`)** — **supplier score** (0–100), **delivery-risk** prediction, auto-order flag confirmed by cron, line discounts, spend & risk dashboards.
 
 **Automations** — scheduled actions: stale-quotation follow-up, lead-score recomputation, high-risk lead detection, low-stock check, auto-confirmation of flagged purchase orders.
 
@@ -57,16 +57,25 @@ flowchart TD
 
 1. Copy the module folders into a directory of your Odoo 19 `addons_path`.
 2. Restart Odoo, enable developer mode and click **Update Apps List**.
-3. Install in this order: `crm_mt` → `sale` → `purchase` → `logismart_website`.
+3. Install in this order: `crm_mt` → `flowmerce_sale` → `flowmerce_purchase` (→ `logismart_website` for the web shop).
 
-> ⚠️ `sale` and `purchase` share their technical names with Odoo's official modules: use them on a database **without** the standard Sales / Purchase apps, or rename them before combining both.
+> The custom models are namespaced (`flowmerce.sale.order`, `flowmerce.purchase.order`…), so these modules install **alongside** Odoo's official Sales and Purchase apps.
+
+## ✅ Verified
+
+Installed on a fresh **Odoo 19** database together with the official *Sales*, *Purchase* and *eCommerce* apps (demo data included): no error, no warning.
+
+```bash
+docker run -d --name db -e POSTGRES_USER=odoo -e POSTGRES_PASSWORD=odoo -e POSTGRES_DB=postgres postgres:16
+docker run --rm --link db -v "$PWD:/mnt/extra-addons" odoo:19 -- -d test --with-demo --stop-after-init   -i sale_management,purchase,website_sale,crm_mt,flowmerce_sale,flowmerce_purchase,logismart_website
+```
 
 ## 📁 Structure
 
 ```
 crm_mt/              models · views (kanban, form, dashboards) · data (automations) · security
-sale/                models · views · wizard · report · data (sequences, demo)
-purchase/            models · views · data · controllers
+flowmerce_sale/      models · views · wizard · report · data (sequences, demo)
+flowmerce_purchase/  models · views · data · controllers
 logismart_website/   website templates · portal · SaaS licences · email templates · cron jobs
 ```
 

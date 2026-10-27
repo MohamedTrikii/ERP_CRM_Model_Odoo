@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_purchase_order_user,flowmerce.purchase.order user,model_flowmerce_purchase_order,crm_mt.group_crm_triki_purchase,1,1,1,0
+access_purchase_order_manager,flowmerce.purchase.order manager,model_flowmerce_purchase_order,crm_mt.group_crm_triki_manager,1,1,1,1
+access_purchase_order_line_user,flowmerce.purchase.order.line user,model_flowmerce_purchase_order_line,crm_mt.group_crm_triki_purchase,1,1,1,0
+access_purchase_order_line_manager,flowmerce.purchase.order.line manager,model_flowmerce_purchase_order_line,crm_mt.group_crm_triki_manager,1,1,1,1

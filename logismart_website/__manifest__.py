@@ -18,7 +18,6 @@
         'views/website_templates.xml',
         'views/menus.xml',
         'views/portal_templates.xml',
-        'views/portal_templates.xml',
         'views/homepage_templates.xml',
         'views/sale_order_views.xml',
         'views/deep_links_views.xml',

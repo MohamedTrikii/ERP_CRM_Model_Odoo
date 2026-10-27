@@ -136,7 +136,7 @@
         <field name="arch" type="xml">
             <form string="Product Stock">
                 <sheet>
-                    <div class="alert alert-info d-flex gap-4 py-2 mb-3">
+                    <div class="alert alert-info d-flex gap-4 py-2 mb-3" role="status">
                         <div class="text-center">
                             <div class="fw-bold fs-4">
                                 <field name="qty_net" readonly="1"/>

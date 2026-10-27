@@ -10,7 +10,7 @@
         <field name="model_id" ref="crm_mt.model_crm_mt_lead"/>
         <field name="state">code</field>
         <field name="code">
-# # env['sale.order'].search([]).cron_auto_followup_quotations()
+# # env['flowmerce.sale.order'].search([]).cron_auto_followup_quotations()
         </field>
     </record>
 
@@ -42,7 +42,7 @@ leads.detect_risk()
         <field name="model_id" ref="crm_mt.model_crm_mt_lead"/>
         <field name="state">code</field>
         <field name="code">
-# # env['purchase.order'].auto_create_purchase_if_needed()
+# # env['flowmerce.purchase.order'].auto_create_purchase_if_needed()
         </field>
     </record>
 
@@ -107,7 +107,7 @@ leads.compute_score()
         <field name="name">LogiSmart Sale: Stale Quotation Follow-Up</field>
         <field name="model_id" ref="crm_mt.model_crm_mt_lead"/>
         <field name="state">code</field>
-        <field name="code"># # env['sale.order'].cron_auto_followup_quotations()</field>
+        <field name="code"># # env['flowmerce.sale.order'].cron_auto_followup_quotations()</field>
         <field name="interval_number">7</field>
         <field name="interval_type">days</field>
         <!-- numbercall supprimé : obsolète Odoo 19 -->
@@ -120,7 +120,7 @@ leads.compute_score()
         <field name="name">LogiSmart Purchase: Auto-Confirm Flagged POs</field>
         <field name="model_id" ref="crm_mt.model_crm_mt_lead"/>
         <field name="state">code</field>
-        <field name="code"># # env['purchase.order'].auto_create_purchase_if_needed()</field>
+        <field name="code"># # env['flowmerce.purchase.order'].auto_create_purchase_if_needed()</field>
         <field name="interval_number">1</field>
         <field name="interval_type">days</field>
         <!-- numbercall supprimé : obsolète Odoo 19 -->

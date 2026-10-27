@@ -1,0 +1,13 @@
+<odoo>
+    <!-- Vue partenaire liée aux ventes -->
+    <record id="view_partner_form_sale" model="ir.ui.view">
+        <field name="name">res.partner.form.sale</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="flowmerce_sale_order_ids" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_sale_order_tree" model="ir.ui.view">
+        <field name="name">flowmerce.sale.order.tree</field>
+        <field name="model">flowmerce.sale.order</field>
+        <field name="arch" type="xml">
+            <list string="Sale Orders"
+                  decoration-info="state == 'draft'"
+                  decoration-muted="state == 'cancel'"
+                  decoration-success="state == 'sale'"
+                  decoration-warning="state == 'sent'"
+                  decoration-danger="payment_status == 'unpaid' and state == 'invoiced'">
+                <field name="name" string="Reference"/>
+                <field name="date_order" string="Order Date"/>
+                <field name="partner_id" string="Customer"/>
+                <field name="user_id" string="Salesperson"/>
+                <field name="amount_untaxed" string="Untaxed" sum="Total Untaxed"/>
+                <field name="amount_total" string="Total" sum="Total"/>
+                <field name="margin" string="Margin" sum="Total Margin" optional="show"/>
+                <field name="margin_rate" string="Margin %" optional="show"/>
+                <field name="state" string="Status" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-warning="state == 'sent'"
+                       decoration-success="state in ('sale', 'delivered', 'invoiced')"/>
+                <field name="invoice_status" string="Invoice Status" widget="badge"/>
+                <field name="payment_status" widget="badge"
+                       decoration-danger="payment_status == 'unpaid'"
+                       decoration-warning="payment_status == 'partial'"
+                       decoration-success="payment_status == 'paid'"
+                       optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_sale_order_form" model="ir.ui.view">
+        <field name="name">flowmerce.sale.order.form</field>
+        <field name="model">flowmerce.sale.order</field>
+        <field name="arch" type="xml">
+            <form string="Sale Order">
+                <header>
+                    <button name="action_quotation_send" string="Send by Email"
+                            type="object" invisible="state != 'draft'" class="btn-primary"/>
+                    <button name="action_confirm" string="Confirm"
+                            type="object" invisible="state not in ['draft', 'sent']" class="btn-primary"/>
+                    <button name="action_delivered" string="Mark Delivered"
+                            type="object" invisible="state != 'sale'" class="btn-primary"/>
+                    <button name="action_create_invoice" string="Create Invoice"
+                            type="object" invisible="state not in ['sale', 'delivered']" class="btn-primary"/>
+                    <button name="action_cancel" string="Cancel"
+                            type="object" invisible="state in ['cancel', 'invoiced']"/>
+                    <button name="action_draft" string="Reset to Draft"
+                            type="object" invisible="state != 'cancel'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,sent,sale,delivered,invoiced"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group name="main_info">
+                            <field name="partner_id" placeholder="Select a customer..."/>
+                            <field name="date_order"/>
+                            <field name="validity_date"/>
+                            <field name="commitment_date"/>
+                        </group>
+                        <group name="sales_info">
+                            <field name="user_id"/>
+                            <field name="team_id" options="{'no_create': True}"/>
+                            <field name="client_order_ref"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Order Lines" name="order_lines">
+                            <field name="order_line">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="product_id" required="1"/>
+                                    <field name="name" required="1"/>
+                                    <field name="product_uom_qty" string="Qty"/>
+                                    <field name="price_unit"/>
+                                    <field name="discount"/>
+                                    <field name="cost_price" optional="show" string="Cost"/>
+                                    <field name="price_subtotal" widget="monetary"/>
+                                    <field name="margin" widget="monetary" optional="show"/>
+                                    <field name="margin_rate" string="Margin %" optional="show"/>
+                                </list>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="amount_untaxed" widget="monetary"/>
+                                <field name="discount_global"
+                                       invisible="discount_global == 0"/>
+                                <field name="amount_tax" widget="monetary"/>
+                                <field name="amount_total" widget="monetary"
+                                       class="oe_subtotal_footer_separator"/>
+                                <field name="margin" widget="monetary"
+                                       class="text-success fw-bold"/>
+                                <field name="margin_rate" string="Margin %"/>
+                            </group>
+                            <div class="oe_clear"/>
+                        </page>
+                        <page string="Other Info" name="other_info">
+                            <group>
+                                <group string="Analytics">
+                                    <field name="priority"/>
+                                    <field name="expected_revenue" widget="monetary"/>
+                                    <field name="probability"/>
+                                    <field name="discount_global"/>
+                                </group>
+                                <group string="Billing">
+                                    <field name="invoice_status"/>
+                                    <field name="payment_status" widget="badge"
+                                           decoration-danger="payment_status == 'unpaid'"
+                                           decoration-warning="payment_status == 'partial'"
+                                           decoration-success="payment_status == 'paid'"/>
+                                    <button name="action_mark_paid" string="Mark as Paid"
+                                            type="object" class="btn-sm btn-success"
+                                            invisible="payment_status == 'paid'"/>
+                                    <button name="action_mark_partial" string="Partial Payment"
+                                            type="object" class="btn-sm btn-warning"
+                                            invisible="payment_status in ('paid','partial')"/>
+                                    <field name="partner_invoice_id"/>
+                                    <field name="partner_shipping_id"/>
+                                </group>
+                            </group>
+                            <group string="Terms and Conditions">
+                                <field name="note" nolabel="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_sale_order_search" model="ir.ui.view">
+        <field name="name">flowmerce.sale.order.search</field>
+        <field name="model">flowmerce.sale.order</field>
+        <field name="arch" type="xml">
+            <search string="Search Sale Orders">
+                <field name="name" string="Reference"/>
+                <field name="partner_id" string="Customer"/>
+                <field name="user_id" string="Salesperson"/>
+                <separator/>
+                <filter string="My Orders" name="my_orders" domain="[('user_id', '=', uid)]"/>
+                <separator/>
+                <filter string="Quotations" name="draft" domain="[('state', 'in', ['draft', 'sent'])]"/>
+                <filter string="Confirmed" name="sale" domain="[('state', '=', 'sale')]"/>
+                <filter string="To Invoice" name="to_invoice"
+                        domain="[('invoice_status', '=', 'to_invoice')]"/>
+                <separator/>
+                <filter string="Order Date" name="date_order" date="date_order"/>
+                <group>
+                    <filter string="Customer" name="customer" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Salesperson" name="salesperson" context="{'group_by': 'user_id'}"/>
+                    <filter string="Status" name="status" context="{'group_by': 'state'}"/>
+                    <filter string="Order Month" name="order_month"
+                            context="{'group_by': 'date_order:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Actions -->
+    <record id="action_sale_order" model="ir.actions.act_window">
+        <field name="name">Sale Orders</field>
+        <field name="res_model">flowmerce.sale.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_sale_order_search"/>
+        <field name="context">{'search_default_my_orders': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first sale order</p>
+        </field>
+    </record>
+
+    <record id="action_quotations" model="ir.actions.act_window">
+        <field name="name">Quotations</field>
+        <field name="res_model">flowmerce.sale.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_sale_order_search"/>
+        <field name="domain">[('state', 'in', ['draft', 'sent'])]</field>
+        <field name="context">{'search_default_my_orders': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a new quotation</p>
+        </field>
+    </record>
+</odoo>

@@ -27,7 +27,7 @@
                 <t t-set="title">Mes Licences</t>
             </t>
             <t t-if="not licenses">
-                <p class="alert alert-warning mt-3">Vous n'avez aucune licence logicielle active.</p>
+                <p class="alert alert-warning mt-3" role="status">Vous n'avez aucune licence logicielle active.</p>
             </t>
             <t t-if="licenses">
                 <div class="row mt-4">

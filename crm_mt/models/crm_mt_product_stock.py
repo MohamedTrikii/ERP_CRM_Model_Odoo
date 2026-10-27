@@ -21,12 +21,14 @@ class CrmMtProductStock(models.Model):
     _rec_name = 'product_id'
     _order = 'product_id'
 
-    _sql_constraints = [
-        ('product_uniq', 'UNIQUE(product_id)',
-         'Stock entry already exists for this product.'),
-        ('qty_available_positive', 'CHECK(qty_available >= 0)',
-         'Available quantity cannot be negative.'),
-    ]
+    _product_uniq = models.Constraint(
+        'UNIQUE(product_id)',
+        'Stock entry already exists for this product.',
+    )
+    _qty_available_positive = models.Constraint(
+        'CHECK(qty_available >= 0)',
+        'Available quantity cannot be negative.',
+    )
 
     # ── Core ──────────────────────────────────────────────────────────────────
     product_id = fields.Many2one(
@@ -34,7 +36,7 @@ class CrmMtProductStock(models.Model):
         ondelete='cascade', index=True,
     )
     product_name = fields.Char(
-        related='product_id.name', string='Product Name', store=True, readonly=True,
+        related='product_id.name', string='Product Name', readonly=True,
     )
     category_id = fields.Many2one(
         related='product_id.categ_id', string='Category', store=True, readonly=True,
@@ -152,11 +154,17 @@ class CrmMtProductStock(models.Model):
         """
         Auto-create a purchase order line for critically low products.
         Looks for the cheapest supplier on the product.
+        Requires the flowmerce_purchase module; suppliers come from product.seller_ids
+        when Odoo's purchase app provides it.
         """
+        if 'flowmerce.purchase.order' not in self.env:
+            _logger.warning('CRM_TRIKI Stock: flowmerce_purchase is not installed. Skipping auto-PO.')
+            return
         for rec in self.filtered(lambda s: s.stock_status in ('critical', 'out')):
             product = rec.product_id
             # Find default supplier
-            seller = product.seller_ids and product.seller_ids[0]
+            sellers = getattr(product, 'seller_ids', False)
+            seller = sellers and sellers[0]
             if not seller:
                 _logger.warning(
                     'CRM_TRIKI Stock: no supplier configured for %s. Skipping auto-PO.',
@@ -164,14 +172,14 @@ class CrmMtProductStock(models.Model):
                 )
                 continue
             # Create PO
-            po = self.env['purchase.order'].create({
+            po = self.env['flowmerce.purchase.order'].create({
                 'partner_id': seller.partner_id.id,
                 'auto_order_flag': True,
                 'order_line': [(0, 0, {
                     'product_id': product.id,
                     'name': product.name,
                     'product_uom_qty': rec.qty_to_reorder,
-                    'product_uom': product.uom_po_id.id or product.uom_id.id,
+                    'product_uom': (getattr(product, 'uom_po_id', False) or product.uom_id).id,
                     'price_unit': seller.price or product.standard_price,
                 })],
             })

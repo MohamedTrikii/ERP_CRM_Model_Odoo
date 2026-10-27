@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ══════════════════════════════════════════════════════════════════════
+         Flowmerce ERP — Purchase Dashboard (graph + pivot)
+         ══════════════════════════════════════════════════════════════════════ -->
+
+    <!-- ── Spend by Supplier — Bar ───────────────────────────────────────── -->
+    <record id="view_purchase_order_graph" model="ir.ui.view">
+        <field name="name">flowmerce.purchase.order.graph</field>
+        <field name="model">flowmerce.purchase.order</field>
+        <field name="arch" type="xml">
+            <graph string="Purchase Spend by Supplier" type="bar" stacked="True">
+                <field name="partner_id" type="row"/>
+                <field name="state" type="col"/>
+                <field name="amount_total" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- ── Supplier Score Distribution — Pie ─────────────────────────────── -->
+    <record id="view_purchase_order_graph_score" model="ir.ui.view">
+        <field name="name">flowmerce.purchase.order.graph.score</field>
+        <field name="model">flowmerce.purchase.order</field>
+        <field name="arch" type="xml">
+            <graph string="Delivery Risk Distribution" type="pie">
+                <field name="delay_risk" type="row"/>
+                <field name="amount_total" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- ── Full Purchase Pivot ───────────────────────────────────────────── -->
+    <record id="view_purchase_order_pivot" model="ir.ui.view">
+        <field name="name">flowmerce.purchase.order.pivot</field>
+        <field name="model">flowmerce.purchase.order</field>
+        <field name="arch" type="xml">
+            <pivot string="Purchase Analysis — Flowmerce ERP">
+                <field name="date_order" type="row" interval="month"/>
+                <field name="partner_id" type="col"/>
+                <field name="amount_total" type="measure"/>
+                <field name="supplier_score" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- ── Dashboard Action ──────────────────────────────────────────────── -->
+    <record id="action_purchase_dashboard" model="ir.actions.act_window">
+        <field name="name">Purchase Dashboard — Flowmerce</field>
+        <field name="res_model">flowmerce.purchase.order</field>
+        <field name="view_mode">graph,pivot,list</field>
+        <field name="search_view_id" ref="view_purchase_order_search"/>
+        <field name="domain">[('state','!=','cancel')]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No purchase data yet. Confirm your first PO to populate the dashboard.
+            </p>
+        </field>
+    </record>
+
+</odoo>

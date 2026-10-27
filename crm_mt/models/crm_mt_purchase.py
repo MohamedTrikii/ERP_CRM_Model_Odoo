@@ -19,9 +19,10 @@ class CrmMtPurchase(models.Model):
     _order = 'priority desc, date_order desc, id desc'
 
     # SQL constraints and indexes for performance
-    _sql_constraints = [
-        ('probability_range', 'CHECK(probability >= 0 AND probability <= 100)', 'Probability must be between 0 and 100.'),
-    ]
+    _probability_range = models.Constraint(
+        'CHECK(probability >= 0 AND probability <= 100)',
+        'Probability must be between 0 and 100.',
+    )
 
     name = fields.Char(
         string='Reference', required=True, copy=False, readonly=True,

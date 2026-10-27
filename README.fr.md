@@ -16,8 +16,8 @@
 | Module | Rôle | Dépend de |
 |---|---|---|
 | [`crm_mt`](crm_mt/) | Pipeline CRM, scoring, segmentation, simulation de stock, automatisations | `base`, `mail`, `utm`, `product` |
-| [`sale`](sale/) | Devis et commandes, marges, statut de paiement, assistant de facturation | `crm_mt`, `product`, `uom` |
-| [`purchase`](purchase/) | Commandes fournisseurs, score fournisseur, risque de retard, commande automatique | `crm_mt`, `product`, `uom` |
+| [`flowmerce_sale`](flowmerce_sale/) | Devis et commandes, marges, statut de paiement, assistant de facturation | `crm_mt`, `product`, `uom` |
+| [`flowmerce_purchase`](flowmerce_purchase/) | Commandes fournisseurs, score fournisseur, risque de retard, commande automatique | `crm_mt`, `product`, `uom` |
 | [`logismart_website`](logismart_website/) | Site web et eCommerce de licences SaaS, portail client (`/my/licenses`), formulaire de contact → lead CRM | `website`, `website_sale`, `crm_mt` |
 
 ## ✨ Points forts
@@ -28,9 +28,9 @@
 - Pipeline kanban avec étapes, équipes, raisons de perte et chatter.
 - **Simulation de stock** (`crm.mt.product.stock`) : quantités disponible / réservée / nette, avec déclenchement automatique d'un achat.
 
-**Ventes (`sale`)** : **marges** par ligne et par commande, prix de revient repris du produit, remise globale, statut de paiement (non payé / partiel / payé), confirmation et facturation automatiques, tableaux de bord chiffre d'affaires et marge.
+**Ventes (`flowmerce_sale`)** : **marges** par ligne et par commande, prix de revient repris du produit, remise globale, statut de paiement (non payé / partiel / payé), confirmation et facturation automatiques, tableaux de bord chiffre d'affaires et marge.
 
-**Achats (`purchase`)** : **score fournisseur** (0–100), estimation du **risque de retard**, commande automatique confirmée par une tâche planifiée, remises par ligne, tableaux de bord des dépenses et des risques.
+**Achats (`flowmerce_purchase`)** : **score fournisseur** (0–100), estimation du **risque de retard**, commande automatique confirmée par une tâche planifiée, remises par ligne, tableaux de bord des dépenses et des risques.
 
 **Automatisations** : tâches planifiées de relance des devis en attente, recalcul des scores, détection des leads à risque, contrôle du stock bas, confirmation automatique des commandes fournisseurs marquées.
 
@@ -57,16 +57,25 @@ flowchart TD
 
 1. Copier les dossiers des modules dans un répertoire de l'`addons_path` d'Odoo 19.
 2. Redémarrer Odoo, activer le mode développeur puis **Mettre à jour la liste des applications**.
-3. Installer dans l'ordre : `crm_mt` → `sale` → `purchase` → `logismart_website`.
+3. Installer dans l'ordre : `crm_mt` → `flowmerce_sale` → `flowmerce_purchase` (→ `logismart_website` pour la boutique en ligne).
 
-> ⚠️ `sale` et `purchase` portent les mêmes noms techniques que les modules officiels d'Odoo : utilisez-les sur une base **sans** les applications Ventes / Achats standard, ou renommez-les avant de combiner les deux.
+> Les modèles personnalisés ont leur propre espace de noms (`flowmerce.sale.order`, `flowmerce.purchase.order`…) : ces modules s'installent **à côté** des applications officielles Ventes et Achats d'Odoo.
+
+## ✅ Vérifié
+
+Installé sur une base **Odoo 19** neuve avec les applications officielles *Ventes*, *Achats* et *eCommerce* (données de démo comprises) : aucune erreur, aucun avertissement.
+
+```bash
+docker run -d --name db -e POSTGRES_USER=odoo -e POSTGRES_PASSWORD=odoo -e POSTGRES_DB=postgres postgres:16
+docker run --rm --link db -v "$PWD:/mnt/extra-addons" odoo:19 -- -d test --with-demo --stop-after-init   -i sale_management,purchase,website_sale,crm_mt,flowmerce_sale,flowmerce_purchase,logismart_website
+```
 
 ## 📁 Structure
 
 ```
 crm_mt/              modèles · vues (kanban, formulaire, tableaux de bord) · données (automatisations) · sécurité
-sale/                modèles · vues · assistant · rapport · données (séquences, démo)
-purchase/            modèles · vues · données · contrôleurs
+flowmerce_sale/      modèles · vues · assistant · rapport · données (séquences, démo)
+flowmerce_purchase/  modèles · vues · données · contrôleurs
 logismart_website/   modèles de pages web · portail · licences SaaS · modèles d'e-mail · tâches planifiées
 ```
 
