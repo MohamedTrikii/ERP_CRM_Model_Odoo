@@ -1,1 +1,1 @@
-# Sale tests init
+from . import test_sale_order

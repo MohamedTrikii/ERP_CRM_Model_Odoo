@@ -1,1 +1,1 @@
-# Purchase tests init
+from . import test_purchase_order

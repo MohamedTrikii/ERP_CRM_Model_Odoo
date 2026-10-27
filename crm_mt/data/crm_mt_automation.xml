@@ -4,15 +4,6 @@
          CRM_TRIKI ERP — Automations & Cron Jobs (crm_mt)
          ══════════════════════════════════════════════════════════════════════ -->
 
-    <!-- ── 1. Server Action: Auto Follow-Up Stale Quotations ──────────────── -->
-    <record id="action_auto_followup_quotations" model="ir.actions.server">
-        <field name="name">CRM_TRIKI: Auto Follow-Up Stale Quotations</field>
-        <field name="model_id" ref="crm_mt.model_crm_mt_lead"/>
-        <field name="state">code</field>
-        <field name="code">
-# # env['flowmerce.sale.order'].search([]).cron_auto_followup_quotations()
-        </field>
-    </record>
 
     <!-- ── 2. Server Action: Recompute All Lead Scores ────────────────────── -->
     <record id="action_recompute_lead_scores" model="ir.actions.server">
@@ -36,15 +27,6 @@ leads.detect_risk()
         </field>
     </record>
 
-    <!-- ── 4. Server Action: Auto-Confirm Auto-Order Purchases ───────────── -->
-    <record id="action_auto_confirm_purchases" model="ir.actions.server">
-        <field name="name">CRM_TRIKI: Auto-Confirm Flagged Purchase Orders</field>
-        <field name="model_id" ref="crm_mt.model_crm_mt_lead"/>
-        <field name="state">code</field>
-        <field name="code">
-# # env['flowmerce.purchase.order'].auto_create_purchase_if_needed()
-        </field>
-    </record>
 
     <!-- ── 5. Server Action: Check Low Stock &amp; Trigger Purchase ──────── -->
     <record id="action_check_low_stock" model="ir.actions.server">
@@ -102,31 +84,7 @@ leads.compute_score()
         <field name="priority">10</field>
     </record>
 
-    <!-- ── Cron 4: Stale Quotation Follow-Up (weekly) ────────────────────── -->
-    <record id="cron_followup_quotations" model="ir.cron">
-        <field name="name">LogiSmart Sale: Stale Quotation Follow-Up</field>
-        <field name="model_id" ref="crm_mt.model_crm_mt_lead"/>
-        <field name="state">code</field>
-        <field name="code"># # env['flowmerce.sale.order'].cron_auto_followup_quotations()</field>
-        <field name="interval_number">7</field>
-        <field name="interval_type">days</field>
-        <!-- numbercall supprimé : obsolète Odoo 19 -->
-        <field name="active">True</field>
-        <field name="priority">15</field>
-    </record>
 
-    <!-- ── Cron 5: Auto-Confirm Flagged Purchase Orders (daily) ─────────── -->
-    <record id="cron_auto_confirm_purchases" model="ir.cron">
-        <field name="name">LogiSmart Purchase: Auto-Confirm Flagged POs</field>
-        <field name="model_id" ref="crm_mt.model_crm_mt_lead"/>
-        <field name="state">code</field>
-        <field name="code"># # env['flowmerce.purchase.order'].auto_create_purchase_if_needed()</field>
-        <field name="interval_number">1</field>
-        <field name="interval_type">days</field>
-        <!-- numbercall supprimé : obsolète Odoo 19 -->
-        <field name="active">True</field>
-        <field name="priority">15</field>
-    </record>
 
 </odoo>
 

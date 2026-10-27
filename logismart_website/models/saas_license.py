@@ -24,6 +24,15 @@ class SaasLicense(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
+        # Expiration follows the product's licence duration (0 = lifetime licence).
+        for vals in vals_list:
+            if vals.get('expiration_date') or not vals.get('product_id'):
+                continue
+            product = self.env['product.product'].browse(vals['product_id'])
+            days = product.product_tmpl_id.license_duration_days
+            if days > 0:
+                start = fields.Datetime.to_datetime(vals.get('activation_date')) or fields.Datetime.now()
+                vals['expiration_date'] = start + timedelta(days=days)
         licenses = super(SaasLicense, self).create(vals_list)
         for lic in licenses:
             template = self.env.ref('logismart_website.email_template_saas_license', raise_if_not_found=False)
